@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ES2018",
+    "module": "commonjs",
+    "jsx": "preserve",
+    "lib": ["ES2020"],
+    "outDir": "./dist",
+    "inlineSourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "lib": ["lib"],
+      "hooks": ["hooks"]
+    }
+  },
+  "include": ["stories", "lib", "theme", "hooks"]
+}
