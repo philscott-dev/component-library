@@ -1,11 +1,11 @@
 import React from 'react'
 import { ThemeProvider } from '@emotion/react'
 import { Story, Meta } from '@storybook/react'
-import { theme } from '../theme'
-import Button, { ButtonProps } from '../lib/Button/Button'
+import { theme } from 'theme'
+import { Button, ButtonProps } from 'components'
 
 export default {
-  title: 'Example/Button',
+  title: 'Button',
   component: Button,
   decorators: [
     (Story) => (

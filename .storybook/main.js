@@ -3,24 +3,6 @@ const fs = require('fs')
 const { merge } = require('webpack-merge')
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
-// 1) Emotion v11 for Storybook fix
-// https://stackoverflow.com/questions/65894711/module-not-found-error-cant-resolve-emotion-styled-base-when-running-story
-function getPackageDir(filepath) {
-  let currDir = path.dirname(require.resolve(filepath))
-  while (true) {
-    if (fs.existsSync(path.join(currDir, 'package.json'))) {
-      return currDir
-    }
-    const { dir, root } = path.parse(currDir)
-    if (dir === root) {
-      throw new Error(
-        `Could not find package.json in the parent directories starting from ${filepath}.`,
-      )
-    }
-    currDir = dir
-  }
-}
-
 module.exports = {
   stories: [
     '../stories/**/*.stories.mdx',
@@ -51,4 +33,22 @@ module.exports = {
       },
     })
   },
+}
+
+// 1) Emotion v11 for Storybook fix
+// https://stackoverflow.com/questions/65894711/module-not-found-error-cant-resolve-emotion-styled-base-when-running-story
+function getPackageDir(filepath) {
+  let currDir = path.dirname(require.resolve(filepath))
+  while (true) {
+    if (fs.existsSync(path.join(currDir, 'package.json'))) {
+      return currDir
+    }
+    const { dir, root } = path.parse(currDir)
+    if (dir === root) {
+      throw new Error(
+        `Could not find package.json in the parent directories starting from ${filepath}.`,
+      )
+    }
+    currDir = dir
+  }
 }
