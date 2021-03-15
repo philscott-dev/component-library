@@ -4,18 +4,13 @@ import { FC } from 'react'
 
 import { FiPlus, FiX } from 'react-icons/fi'
 
-interface GlobalButtonProps {
+export interface FABProps {
   className?: string
   isVisible?: boolean
   disabled?: boolean
   onMouseDown: () => void
 }
-const GlobalButton: FC<GlobalButtonProps> = ({
-  className,
-  isVisible,
-  disabled,
-  onMouseDown,
-}) => {
+const FAB: FC<FABProps> = ({ className, isVisible, disabled, onMouseDown }) => {
   return (
     <button className={className} disabled={disabled} onMouseDown={onMouseDown}>
       {isVisible ? <FiX /> : <FiPlus />}
@@ -23,7 +18,7 @@ const GlobalButton: FC<GlobalButtonProps> = ({
   )
 }
 
-export default styled(GlobalButton)`
+export default styled(FAB)`
   z-index: 1;
   right: 48px;
   top: 48px;

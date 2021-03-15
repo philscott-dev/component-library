@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { DirectionType } from './Dropdown'
 
-interface DropdownMenuProps {
+export interface DropdownMenuProps {
   isVisible: boolean
   direction?: DirectionType[] | DirectionType
   top?: number

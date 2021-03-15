@@ -1,7 +1,6 @@
-import { ApolloError } from 'apollo-boost'
 import { Keyframes } from '@emotion/serialize'
 
-export type FormError = string | Error | ApolloError | undefined
+export type FormError = string | Error | undefined
 
 export interface Errors {
   [key: string]: FormError

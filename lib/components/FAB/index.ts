@@ -1,1 +1,2 @@
-export { default as GlobalButton } from './FAB'
+export { default as FAB } from './FAB'
+export type { FABProps } from './FAB'

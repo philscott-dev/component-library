@@ -1,18 +1,16 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
-import { Alert } from 'components'
+import { Dropdown, DropdownProps } from 'components'
 import { Theme } from './Decorators'
 
 export default {
-  title: 'Alert',
-  component: Alert,
+  title: 'Dropdown',
+  component: Dropdown,
   decorators: [Theme],
   argTypes: {},
 } as Meta
 
-const Template: Story = (args) => <Alert {...args}>Click</Alert>
+const Template: Story<DropdownProps> = (args) => <Dropdown {...args}></Dropdown>
 
 export const Primary = Template.bind({})
-Primary.args = {
-  size: 'small',
-}
+Primary.args = {}

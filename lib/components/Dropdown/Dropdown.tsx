@@ -7,7 +7,7 @@ import DropdownMenu from './DropdownMenu'
 
 export type DirectionType = 'left' | 'up' | 'down' | 'right'
 
-interface DropdownProps {
+export interface DropdownProps {
   className?: string
   direction?: DirectionType[] | DirectionType
   top?: number

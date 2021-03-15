@@ -1,34 +1,38 @@
 import React from 'react'
-import { ThemeProvider } from '@emotion/react'
 import { Story, Meta } from '@storybook/react'
-import { theme } from 'theme'
 import { Button, ButtonProps } from 'components'
+import { Theme } from './Decorators'
 
 export default {
   title: 'Button',
   component: Button,
-  decorators: [
-    (Story) => (
-      <ThemeProvider theme={theme}>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+  decorators: [Theme],
+  argTypes: {},
 } as Meta
 
-const Template: Story<ButtonProps> = (args) => (
-  <Button.Primary {...args}>Click</Button.Primary>
-)
+const Template: Story<ButtonProps> = (args) => <Button {...args}>Click</Button>
 
 export const Primary = Template.bind({})
 Primary.args = {
-  size: 'small',
+  variant: 'primary',
 }
 
 export const Secondary = Template.bind({})
 Secondary.args = {
-  size: 'large',
+  variant: 'secondary',
+}
+
+export const Tertiary = Template.bind({})
+Tertiary.args = {
+  variant: 'tertiary',
+}
+
+export const Alt = Template.bind({})
+Alt.args = {
+  variant: 'alt',
+}
+
+export const Danger = Template.bind({})
+Danger.args = {
+  variant: 'danger',
 }

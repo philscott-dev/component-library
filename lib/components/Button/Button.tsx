@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
-import { Sizes } from './types'
+import type { Theme } from '@emotion/react'
 
 export interface ButtonProps {
-  size: Sizes
+  size?: 'small' | 'normal' | 'large'
   type?: 'button' | 'submit' | 'reset'
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'alt' | 'danger'
   isActive?: boolean
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   onMouseDown?: (e: React.MouseEvent<HTMLButtonElement>) => void
@@ -14,6 +15,7 @@ export interface ButtonProps {
 
 const Button = styled.button<ButtonProps>`
   ${sizes};
+  ${variants};
   display: flex;
   justify-content: center;
   white-space: nowrap;
@@ -23,6 +25,7 @@ const Button = styled.button<ButtonProps>`
   pointer-events: all;
   border-style: solid;
   cursor: pointer;
+  font-family: ${({ theme }) => theme.font.family};
   transition: ${({ theme }) => theme.transition.all};
   &:hover {
     background-size: 100% 100%;
@@ -37,66 +40,11 @@ const Button = styled.button<ButtonProps>`
   }
 `
 
-const Primary = styled(Button)`
-  color: ${({ theme }) => theme.color.white[100]};
-  background: ${({ theme }) => theme.color.indigo[400]};
-  border-color: ${({ theme }) => theme.color.indigo[400]};
-  box-shadow: ${({ theme }) => theme.shadow.up.one};
-  &:hover {
-    color: ${({ theme }) => theme.color.white[100]};
-    background: ${({ theme }) => theme.color.indigo[300]};
-    box-shadow: ${({ theme }) => theme.shadow.up.two};
-    border-color: ${({ theme }) => theme.color.indigo[300]};
-  }
-`
+interface StyledProps extends ButtonProps {
+  theme: Theme
+}
 
-const Secondary = styled(Button)`
-  color: ${({ theme }) => theme.color.white[100]};
-  background: ${({ theme }) => theme.color.indigo[400]};
-  border-color: ${({ theme }) => theme.color.indigo[400]};
-  box-shadow: ${({ theme }) => theme.shadow.up.one};
-  &:hover {
-    color: ${({ theme }) => theme.color.white[100]};
-    background: ${({ theme }) => theme.color.indigo[400]};
-    box-shadow: ${({ theme }) => theme.shadow.up.two};
-  }
-  &:active {
-    box-shadow: ${({ theme }) => theme.shadow.up.one};
-  }
-`
-
-const Tertiary = styled(Button)`
-  color: ${({ theme }) => theme.color.white[100]};
-  background: transparent;
-  /* background: ${({ theme }) => theme.color.indigo[600]}; */
-  border-color: ${({ theme }) => theme.color.indigo[400]};
-  &:hover {
-    color: ${({ theme }) => theme.color.white[100]};
-    border-color: ${({ theme }) => theme.color.indigo[300]};
-  }
-`
-
-const Alt = styled(Button)`
-  color: ${({ theme }) => theme.color.white[100]};
-  background: ${({ theme }) => theme.color.blue[700]};
-  border-color: ${({ theme, isActive }) =>
-    isActive ? theme.color.blue[400] : theme.color.blue[700]};
-  &:hover {
-    border-color: ${({ theme }) => theme.color.blue[300]};
-  }
-`
-
-const Danger = styled(Button)`
-  color: ${({ theme }) => theme.color.red[300]};
-  background: transparent;
-  border-color: ${({ theme, isActive }) =>
-    isActive ? theme.color.blue[400] : theme.color.blue[700]};
-  &:hover {
-    border-color: ${({ theme }) => theme.color.blue[300]};
-  }
-`
-
-function sizes({ size }: { size?: Sizes }) {
+function sizes({ size }: StyledProps) {
   switch (size) {
     case 'small':
       return css`
@@ -116,10 +64,71 @@ function sizes({ size }: { size?: Sizes }) {
   }
 }
 
-export default Object.assign(Button, {
-  Primary,
-  Secondary,
-  Tertiary,
-  Alt,
-  Danger,
-})
+function variants({ variant, isActive, theme }: StyledProps) {
+  switch (variant) {
+    case 'secondary':
+      return css`
+        color: ${theme.color.white[100]};
+        background: ${theme.color.gray[600]};
+        border-color: ${theme.color.gray[600]};
+        box-shadow: ${theme.shadow.up.one};
+        &:hover {
+          color: ${theme.color.white[100]};
+          background: ${theme.color.gray[300]};
+          border-color: ${theme.color.gray[300]};
+          box-shadow: ${theme.shadow.up.two};
+        }
+        &:active {
+          box-shadow: ${theme.shadow.up.one};
+        }
+      `
+    case 'tertiary':
+      return css`
+        color: ${theme.color.white[100]};
+        background: transparent;
+        /* background: ${theme.color.indigo[600]}; */
+        border-color: ${theme.color.indigo[400]};
+        &:hover {
+          color: ${theme.color.white[100]};
+          border-color: ${theme.color.indigo[300]};
+        }
+      `
+    case 'alt':
+      return css`
+        color: ${theme.color.white[100]};
+        background: ${theme.color.blue[700]};
+        border-color: ${isActive
+          ? theme.color.blue[400]
+          : theme.color.blue[700]};
+        &:hover {
+          border-color: ${theme.color.blue[300]};
+        }
+      `
+    case 'danger':
+      return css`
+        color: ${theme.color.red[300]};
+        background: transparent;
+        border-color: ${isActive
+          ? theme.color.blue[400]
+          : theme.color.blue[700]};
+        &:hover {
+          border-color: ${theme.color.blue[300]};
+        }
+      `
+    default:
+      return css`
+        color: ${theme.color.white[100]};
+        background: ${theme.color.indigo[400]};
+        border-color: ${theme.color.indigo[400]};
+        box-shadow: ${theme.shadow.up.one};
+        &:hover {
+          color: ${theme.color.white[100]};
+          background: ${theme.color.indigo[300]};
+          box-shadow: ${theme.shadow.up.two};
+          border-color: ${theme.color.indigo[300]};
+        }
+      `
+  }
+}
+
+export default Button

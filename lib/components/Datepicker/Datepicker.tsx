@@ -11,14 +11,12 @@ import Picker from './Picker'
 export interface DatepickerProps {
   name?: string
   date?: Date
-  //onChange: (date: Date) => void
   className?: string
   placeholder?: string
 }
 
 const Datepicker: FC<DatepickerProps> = ({
   date,
-  //onChange,
   name,
   className,
   placeholder,

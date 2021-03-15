@@ -1,9 +1,10 @@
 import styled from '@emotion/styled'
 import { css, Theme } from '@emotion/react'
-import { Size } from 'types'
+import { Size } from '../types'
 
-type Sizes = Size.large
-interface H2Props {
+type Sizes = Size['large']
+
+export interface H2Props {
   size?: Sizes
 }
 

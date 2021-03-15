@@ -33,7 +33,9 @@ export const ValidationContext = createContext<{
   errors: {},
   loadingStatus: LoadingStatus.Normal,
   delayedStatus: LoadingStatus.Normal,
-  updateEntry: () => {},
+  updateEntry: () => {
+    return null
+  },
 })
 
 const Form: FC<FormProps> = ({
