@@ -1,22 +1,20 @@
 import styled from '@emotion/styled'
 import { css, Theme } from '@emotion/react'
-import { TextSizes } from './types'
 
-interface TextProps {
-  size?: TextSizes
+export interface TextProps {
+  size?: 'large' | 'normal' | 'small'
+  variant?: 'primary' | 'emphasized' | 'deemphasized' | 'light'
   align?: 'center' | 'left' | 'right'
   ellipsis?: boolean
 }
 
 const Text = styled.p<TextProps>`
   ${sizes}
+  ${variants}
   text-align: ${({ align }) => align || 'initial'};
   margin: 0;
   padding: 0;
-  font-weight: 500;
-  color: ${({ theme }) => theme.color.white[100]};
   font-family: ${({ theme }) => theme.font.family};
-
   ${({ ellipsis }) =>
     ellipsis
       ? css`
@@ -27,22 +25,40 @@ const Text = styled.p<TextProps>`
       : null}
 `
 
-const Emphasized = styled(Text)`
-  font-weight: 500;
-  color: ${({ theme }) => theme.color.blue[300]};
-`
+/**
+ * Styled Props
+ */
 
-const Deemphasized = styled(Text)`
-  font-weight: 300;
-  color: ${({ theme }) => theme.color.gray[300]};
-`
+interface StyledProps extends TextProps {
+  theme: Theme
+}
 
-const Light = styled(Text)`
-  font-weight: 300;
-  color: ${({ theme }) => theme.color.white[100]};
-`
+function variants({ variant, theme }: StyledProps) {
+  switch (variant) {
+    case 'emphasized':
+      return css`
+        font-weight: 500;
+        color: ${theme.color.blue[300]};
+      `
+    case 'deemphasized':
+      return css`
+        font-weight: 300;
+        color: ${theme.color.gray[300]};
+      `
+    case 'light':
+      return css`
+        font-weight: 300;
+        color: ${theme.color.white[100]};
+      `
+    default:
+      return css`
+        font-weight: 500;
+        color: ${theme.color.white[100]};
+      `
+  }
+}
 
-function sizes({ size, theme }: { size?: TextSizes; theme: Theme }) {
+function sizes({ size, theme }: StyledProps) {
   switch (size) {
     case 'small':
       return css`
@@ -74,4 +90,4 @@ function sizes({ size, theme }: { size?: TextSizes; theme: Theme }) {
   }
 }
 
-export default Object.assign(Text, { Emphasized, Deemphasized, Light })
+export default Text

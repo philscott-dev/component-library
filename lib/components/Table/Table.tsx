@@ -16,7 +16,7 @@ import {
   CellDropdown,
 } from './types'
 
-interface TableProps {
+export interface TableProps {
   data: Data[]
   extraData?: ExtraTableData
   exclude?: string[]

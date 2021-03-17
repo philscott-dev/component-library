@@ -40,6 +40,10 @@ const Button = styled.button<ButtonProps>`
   }
 `
 
+/**
+ * Styled Props
+ */
+
 interface StyledProps extends ButtonProps {
   theme: Theme
 }

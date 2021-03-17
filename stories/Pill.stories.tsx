@@ -2,11 +2,11 @@ import React from 'react'
 import { ThemeProvider } from '@emotion/react'
 import { Story, Meta } from '@storybook/react'
 import { theme } from 'theme'
-import { } from 'components'
+import { Pill, PillProps } from 'components'
 
 export default {
-  title: 'TouchMove',
-  component: Button,
+  title: 'Pill',
+  component: Pill,
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>
@@ -19,16 +19,16 @@ export default {
   },
 } as Meta
 
-const Template: Story<ButtonProps> = (args) => (
-  <Button.Primary {...args}>Click</Button.Primary>
-)
+const Template: Story<PillProps> = (args) => <Pill {...args} />
 
-export const Primary = Template.bind({})
-Primary.args = {
-  size: 'small',
+export const Default = Template.bind({})
+Default.args = {
+  text: 'Pill Component',
+  onClose: undefined,
 }
 
-export const Secondary = Template.bind({})
-Secondary.args = {
-  size: 'large',
+export const Close = Template.bind({})
+Close.args = {
+  text: 'Close Me',
+  onClose: () => false,
 }

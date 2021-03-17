@@ -32,7 +32,7 @@ const Container = styled.div`
   align-items: center;
   text-transform: capitalize;
   padding-bottom: 24px;
-  border-bottom: 1px solid ${({ theme }) => theme.color.blue[700]};
+  /* border-bottom: 1px solid ${({ theme }) => theme.color.blue[700]}; */
   margin-bottom: 32px;
 `
 

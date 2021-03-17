@@ -14,5 +14,23 @@ const Template: Story<BreadCrumbsProps> = (args) => (
   <BreadCrumbs {...args}>Click</BreadCrumbs>
 )
 
+const BASE_PATH = '/?path=/story/breadcrumbs--primary'
+
 export const Primary = Template.bind({})
-Primary.args = {}
+Primary.args = {
+  homePath: BASE_PATH,
+  paths: [
+    {
+      label: 'Path 1',
+      href: BASE_PATH,
+    },
+    {
+      label: 'Path 2',
+      href: BASE_PATH,
+    },
+    {
+      label: 'Path 3',
+      href: BASE_PATH,
+    },
+  ],
+}

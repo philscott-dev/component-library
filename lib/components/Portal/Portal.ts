@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
-interface PortalProps {
+export interface PortalProps {
   mountId: string
 }
 

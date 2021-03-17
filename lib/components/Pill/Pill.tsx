@@ -1,23 +1,27 @@
 import React from 'react'
 import { FC } from 'react'
 import styled from '@emotion/styled'
-import { Text } from 'components'
-import CloseButton from './CloseButton'
+import { Text, IconButton } from 'components'
+import { FiX } from 'react-icons/fi'
 
-interface PillProps {
+export interface PillProps {
   className?: string
   onClose?: () => void
   text: string
 }
 
-const PillComponent: FC<PillProps> = ({ onClose, text, className }) => (
+const Pill: FC<PillProps> = ({ className, onClose, text }) => (
   <div className={className}>
     <Text size="small">{text}</Text>
-    {onClose ? <CloseButton onClose={onClose} /> : null}
+    {onClose ? (
+      <IconButton aria-label="close" onMouseDown={onClose}>
+        <FiX />
+      </IconButton>
+    ) : null}
   </div>
 )
 
-const Pill = styled(PillComponent)`
+export default styled(Pill)`
   display: inline-flex;
   align-items: center;
   padding: 8px 16px;
@@ -25,6 +29,10 @@ const Pill = styled(PillComponent)`
   border-radius: 40px;
   margin-right: 16px;
   background: ${({ theme }) => theme.color.blue[400]};
+  & > button {
+    margin-left: 8px;
+    > {
+      color: ${({ theme }) => theme.color.white[100]};
+    }
+  }
 `
-
-export default Pill

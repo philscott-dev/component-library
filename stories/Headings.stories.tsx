@@ -15,7 +15,9 @@ export default {
 const H1Template: Story<H1Props> = (args) => <H1 {...args}>Heading 1</H1>
 export const Heading1 = H1Template.bind({})
 Heading1.storyName = 'H1'
-Heading1.args = {}
+Heading1.args = {
+  size: undefined,
+}
 
 /**
  * H2

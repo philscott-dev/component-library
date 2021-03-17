@@ -8,7 +8,7 @@ import ActionButton from './ActionButton'
 
 const RATIO = 2.33333333333
 
-interface TouchMoveProps {
+export interface TouchMoveProps {
   className?: string
 }
 const TouchMove: FC<TouchMoveProps> = ({ className }) => {
@@ -17,7 +17,7 @@ const TouchMove: FC<TouchMoveProps> = ({ className }) => {
   const [width, setWidth] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    let img = new Image()
+    const img = new Image()
     img.onload = function () {
       //@ts-ignore
       setImage({ width: this.width, height: this.height, src: this.src })

@@ -1,6 +1,4 @@
-import React from 'react'
-import { FC } from 'react'
-
+import React, { FC } from 'react'
 import styled from '@emotion/styled'
 
 interface ItemProps {

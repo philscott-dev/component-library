@@ -2,11 +2,12 @@ import React from 'react'
 import { ThemeProvider } from '@emotion/react'
 import { Story, Meta } from '@storybook/react'
 import { theme } from 'theme'
-import { } from 'components'
+import { Table, TableProps } from 'components'
+import data from './mock'
 
 export default {
-  title: 'IconButton',
-  component: Button,
+  title: 'Table',
+  component: Table,
   decorators: [
     (Story) => (
       <ThemeProvider theme={theme}>
@@ -19,16 +20,10 @@ export default {
   },
 } as Meta
 
-const Template: Story<ButtonProps> = (args) => (
-  <Button.Primary {...args}>Click</Button.Primary>
-)
+const Template: Story<TableProps> = (args) => <Table {...args}>Click</Table>
 
 export const Primary = Template.bind({})
 Primary.args = {
-  size: 'small',
-}
-
-export const Secondary = Template.bind({})
-Secondary.args = {
-  size: 'large',
+  title: 'Data Table',
+  data,
 }

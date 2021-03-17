@@ -1,54 +1,66 @@
 import styled from '@emotion/styled'
-import { Weight, Size } from 'types'
+import { css, Theme } from '@emotion/react'
 
-type Sizes = Size.small | Size.medium | Size.large
-type Weights = Weight.normal | Weight.light
-
-interface SubtitleProps {
-  size: Sizes
-  weight: Weights
+export interface SubtitleProps {
+  size?: 'small' | 'normal' | 'large'
+  weight?: 'normal' | 'white'
 }
 
 const Subtitle = styled.p<SubtitleProps>`
+  ${sizes};
+  ${weights};
   text-transform: uppercase;
   text-align: inherit;
   font-family: ${({ theme }) => theme.font.family};
 `
 
-// const weightCss: Styles<Weights> = {
-//   normal: css`
-//     color: ${theme.color.black};
-//   `,
-//   light: css`
-//     color: ${theme.color.white};
-//   `,
-// }
+interface StyledProps extends SubtitleProps {
+  theme: Theme
+}
 
-// const sizeCss: Styles<Sizes> = {
-//   small: css`
-//     font-size: 12px;
-//     letter-spacing: 0.67px;
-//     @media screen and (max-width: ${theme.breakpoint.small}) {
-//       font-size: 12px;
-//       letter-spacing: 0.67px;
-//     }
-//   `,
-//   medium: css`
-//     font-size: 14px;
-//     letter-spacing: 0.78px;
-//     @media screen and (max-width: ${theme.breakpoint.small}) {
-//       font-size: 12px;
-//       letter-spacing: 0.67px;
-//     }
-//   `,
-//   large: css`
-//     font-size: 16px;
-//     letter-spacing: 0.89px;
-//     @media screen and (max-width: ${theme.breakpoint.small}) {
-//       font-size: 14px;
-//       letter-spacing: 0.78px;
-//     }
-//   `,
-// }
+function sizes({ size, theme }: StyledProps) {
+  switch (size) {
+    case 'small':
+      return css`
+        font-size: 12px;
+        letter-spacing: 0.67px;
+        @media screen and (max-width: ${theme.breakpoint.small}) {
+          font-size: 12px;
+          letter-spacing: 0.67px;
+        }
+      `
+    case 'large':
+      return css`
+        font-size: 16px;
+        letter-spacing: 0.89px;
+        @media screen and (max-width: ${theme.breakpoint.small}) {
+          font-size: 14px;
+          letter-spacing: 0.78px;
+        }
+      `
+    default:
+      return css`
+        font-size: 14px;
+        letter-spacing: 0.78px;
+        @media screen and (max-width: ${theme.breakpoint.small}) {
+          font-size: 12px;
+          letter-spacing: 0.67px;
+        }
+      `
+  }
+}
+
+function weights({ weight, theme }: StyledProps) {
+  switch (weight) {
+    case 'white':
+      return css`
+        color: ${theme.color.white[100]};
+      `
+    default:
+      return css`
+        color: ${theme.color.black[700]};
+      `
+  }
+}
 
 export default Subtitle

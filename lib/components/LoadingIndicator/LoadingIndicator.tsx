@@ -3,31 +3,30 @@ import styled from '@emotion/styled'
 import { FC } from 'react'
 import { Grid } from 'svg-loaders-react'
 
-interface LoadingIndicatorProps {
+export interface LoadingIndicatorProps {
   className?: string
   isLoading: boolean
+  color?: string
 }
 const LoadingIndicator: FC<LoadingIndicatorProps> = ({
   className,
   isLoading = false,
+  color = '#d3cbfd',
 }) => {
   if (!isLoading) {
     return null
   }
   return (
     <div className={className}>
-      <Grid stroke="#0e0d13" strokeOpacity="1" />
+      <Grid stroke={color} strokeOpacity="1" />
     </div>
   )
 }
 
 export default styled(LoadingIndicator)`
-  display: flex;
   left: 32px;
   bottom: 32px;
   box-sizing: border-box;
-  justify-content: center;
-  align-items: center;
   z-index: 1000;
   pointer-events: none;
   > svg {

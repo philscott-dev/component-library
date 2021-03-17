@@ -1,9 +1,8 @@
 import styled from '@emotion/styled'
 import { css, Theme } from '@emotion/react'
-import { AnchorSizes } from './types'
 
 export interface AnchorProps {
-  size?: AnchorSizes
+  size?: 'small' | 'large'
   href?: string
 }
 
@@ -26,7 +25,15 @@ const Anchor = styled.a<AnchorProps>`
   }
 `
 
-function sizes({ size, theme }: { size?: AnchorSizes; theme: Theme }) {
+/**
+ * Styled Props
+ */
+
+interface StyledProps extends AnchorProps {
+  theme: Theme
+}
+
+function sizes({ size, theme }: StyledProps) {
   switch (size) {
     case 'small':
       return css`

@@ -1,18 +1,19 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
-import { Anchor, AnchorProps } from 'components'
+import { IconButton } from 'components'
 import { Theme } from './Decorators'
+import { FiInfo } from 'react-icons/fi'
 
 export default {
-  title: 'Anchor',
-  component: Anchor,
+  title: 'IconButton',
   decorators: [Theme],
   argTypes: {},
 } as Meta
 
-const Template: Story<AnchorProps> = (args) => <Anchor {...args}>Click</Anchor>
-
+const Template: Story = (args) => (
+  <IconButton {...args}>
+    <FiInfo />
+  </IconButton>
+)
 export const Primary = Template.bind({})
-Primary.args = {
-  size: 'small',
-}
+Primary.args = {}

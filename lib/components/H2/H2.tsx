@@ -1,11 +1,8 @@
 import styled from '@emotion/styled'
 import { css, Theme } from '@emotion/react'
-import { Size } from '../types'
-
-type Sizes = Size['large']
 
 export interface H2Props {
-  size?: Sizes
+  size?: 'large'
 }
 
 const H2 = styled.h2<H2Props>`
@@ -23,7 +20,15 @@ const H2 = styled.h2<H2Props>`
   }
 `
 
-function sizes({ size, theme }: { size?: Sizes; theme: Theme }) {
+/**
+ * Styled Props
+ */
+
+interface StyledProps extends H2Props {
+  theme: Theme
+}
+
+function sizes({ size, theme }: StyledProps) {
   if (size === 'large') {
     return css`
       font-size: 58px;

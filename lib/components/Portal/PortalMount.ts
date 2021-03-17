@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-interface PortalMountProps {
+export interface PortalMountProps {
   id: string
 }
 

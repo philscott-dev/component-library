@@ -2,12 +2,10 @@ import React from 'react'
 import styled from '@emotion/styled'
 
 import { FC } from 'react'
-import { IconButton } from '../IconButton'
-import { H4 } from '../H4'
+import { IconButton, H4, Overlay } from 'components'
 import { FiX } from 'react-icons/fi'
-import Overlay from './Overlay'
 
-interface ModalProps {
+export interface ModalProps {
   title: string
   children: any
   isVisible: boolean
