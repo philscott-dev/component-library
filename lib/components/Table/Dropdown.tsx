@@ -1,7 +1,5 @@
-import React from 'react'
 import styled from '@emotion/styled'
 import { forwardRef, RefObject, useMemo, useState, MouseEvent } from 'react'
-import { css } from '@emotion/react'
 import { CellDropdown } from './types'
 import { DropdownOption, DropdownHeading, DropdownMenu } from 'components'
 import { useOnClickOutside, useOnClick } from 'hooks'
