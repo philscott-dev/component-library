@@ -2,10 +2,10 @@
 // import React, { FC } from 'react'
 //import styled from '@emotion/styled'
 
-// interface PaginationProps {
-//   page: number
-//   pageCount: number
-// }
+export interface PaginationProps {
+  page: number
+  pageCount: number
+}
 
 // const Pagination: FC<PaginationProps> = ({
 //   page,
@@ -368,7 +368,7 @@
 
 import React, { FC } from 'react'
 
-const Pagination: FC = () => {
+const Pagination: FC<PaginationProps> = () => {
   return <div></div>
 }
 

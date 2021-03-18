@@ -1,22 +1,13 @@
 import React from 'react'
-import { ThemeProvider } from '@emotion/react'
+import { Theme } from './Decorators'
 import { Story, Meta } from '@storybook/react'
-import { theme } from 'theme'
 import { Pill, PillProps } from 'components'
 
 export default {
   title: 'Pill',
   component: Pill,
-  decorators: [
-    (Story) => (
-      <ThemeProvider theme={theme}>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
-  argTypes: {
-    backgroundColor: { control: 'color' },
-  },
+  decorators: [Theme],
+  argTypes: {},
 } as Meta
 
 const Template: Story<PillProps> = (args) => <Pill {...args} />

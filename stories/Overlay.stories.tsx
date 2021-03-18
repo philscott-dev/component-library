@@ -1,19 +1,12 @@
 import React from 'react'
-import { ThemeProvider } from '@emotion/react'
+import { Theme } from './Decorators'
 import { Story, Meta } from '@storybook/react'
-import { theme } from 'theme'
 import { Overlay, OverlayProps } from 'components'
 
 export default {
   title: 'Overlay',
   component: Overlay,
-  decorators: [
-    (Story) => (
-      <ThemeProvider theme={theme}>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
+  decorators: [Theme],
   argTypes: {},
 } as Meta
 

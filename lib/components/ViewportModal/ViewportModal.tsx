@@ -7,7 +7,7 @@ import ViewportModalBody from './ViewportModalBody'
 import { Form } from 'components'
 import { Entries } from '../Form/types'
 
-interface ViewportModalProps {
+export interface ViewportModalProps {
   className?: string
   title?: string
   index: number

@@ -74,13 +74,13 @@ const Table: FC<TableProps> = ({
 
   return (
     <>
-      <TableTitlebar
+      {/* <TableTitlebar
         title={title}
         subtitle={subtitle}
         breadCrumbs={breadCrumbs}
         onBaseBreadCrumbClick={handleBaseBreadCrumbClick}
         onBreadCrumbClick={handleBreadCrumbClick}
-      />
+      /> */}
       <table className={className}>
         <Thead>
           <Row>

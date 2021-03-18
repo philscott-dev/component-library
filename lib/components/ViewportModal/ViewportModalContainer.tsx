@@ -1,9 +1,7 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from '@emotion/styled'
 
-import { FC } from 'react'
-
-interface ViewportModalContainerProps {
+export interface ViewportModalContainerProps {
   className?: string
   modalWidth?: number
 }

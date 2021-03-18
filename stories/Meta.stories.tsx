@@ -1,19 +1,12 @@
 import React from 'react'
-import { ThemeProvider } from '@emotion/react'
+import { Theme } from './Decorators'
 import { Story, Meta as MetaType } from '@storybook/react'
-import { theme } from 'theme'
 import { Meta, MetaProps } from 'components'
 
 export default {
   title: 'Meta',
   component: Meta,
-  decorators: [
-    (Story) => (
-      <ThemeProvider theme={theme}>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
+  decorators: [Theme],
   argTypes: {},
 } as MetaType
 

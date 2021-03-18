@@ -1,18 +1,19 @@
 import React from 'react'
 import { Theme } from './Decorators'
 import { Story, Meta } from '@storybook/react'
-import { Portal, PortalProps } from 'components'
+import { Pagination, PaginationProps } from 'components'
 
 export default {
-  title: 'Portal',
-  component: Portal,
+  title: 'Pagination',
+  component: Pagination,
   decorators: [Theme],
   argTypes: {},
 } as Meta
 
-const Template: Story<PortalProps> = (args) => <Portal {...args}>Click</Portal>
+const Template: Story<PaginationProps> = (args) => <Pagination {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  mountId: 'mount-id',
+  page: 1,
+  pageCount: 10,
 }

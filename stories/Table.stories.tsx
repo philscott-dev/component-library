@@ -1,22 +1,15 @@
 import React from 'react'
-import { ThemeProvider } from '@emotion/react'
+import { Theme } from './Decorators'
 import { Story, Meta } from '@storybook/react'
-import { theme } from 'theme'
 import { Table, TableProps } from 'components'
 import data from './mock'
 
 export default {
   title: 'Table',
   component: Table,
-  decorators: [
-    (Story) => (
-      <ThemeProvider theme={theme}>
-        <Story />
-      </ThemeProvider>
-    ),
-  ],
+  decorators: [Theme],
   argTypes: {
-    backgroundColor: { control: 'color' },
+    // backgroundColor: { control: 'color' },
   },
 } as Meta
 
