@@ -1,4 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react'
+import {
+  useState,
+  useContext,
+  useEffect,
+  KeyboardEvent,
+  ChangeEvent,
+} from 'react'
 import { LoadingStatus } from './useLoadingStatus'
 import { ValidationContext } from '../Form'
 import { isString, isNumber } from 'helpers'
@@ -36,9 +42,9 @@ export function useInputValidation(name: string, defaultValue: any) {
 
   const onChange = (
     e:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+      | ChangeEvent<HTMLSelectElement>
+      | ChangeEvent<HTMLInputElement>
+      | ChangeEvent<HTMLTextAreaElement>
       | string
       | number
       | Date,
@@ -58,9 +64,9 @@ export function useInputValidation(name: string, defaultValue: any) {
 
   const onKeyUp = (
     e:
-      | React.KeyboardEvent<HTMLInputElement>
-      | React.KeyboardEvent<HTMLSelectElement>
-      | React.KeyboardEvent<HTMLTextAreaElement>,
+      | KeyboardEvent<HTMLInputElement>
+      | KeyboardEvent<HTMLSelectElement>
+      | KeyboardEvent<HTMLTextAreaElement>,
   ) => {
     if (e.keyCode === 13) {
       e.currentTarget.blur()

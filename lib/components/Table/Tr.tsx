@@ -129,7 +129,7 @@ const Tr: FC<TrProps> = ({
               data={data}
               expandKey={expandKeys[index + 1]}
               row={get(originalRow, expandKeys.slice(0, index + 1))}
-              cellDropdown={dropdownConfig}
+              dropdownConfig={dropdownConfig}
               onCellClick={handleCellClick}
             />
           ))}

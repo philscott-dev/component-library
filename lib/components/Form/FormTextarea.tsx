@@ -1,6 +1,4 @@
-import React from 'react'
 import { FC, useState, useEffect, ChangeEvent } from 'react'
-
 import styled from '@emotion/styled'
 import { useInputValidation } from './hooks/useInputValidation'
 import FormLabel from './FormLabel'

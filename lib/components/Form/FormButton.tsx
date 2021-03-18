@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from '@emotion/styled'
 import { FC, MouseEvent, useState, useContext, useEffect } from 'react'
 import { css } from '@emotion/react'

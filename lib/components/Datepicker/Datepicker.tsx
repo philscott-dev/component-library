@@ -1,4 +1,3 @@
-import React from 'react'
 import { FC, useState, createRef, ChangeEvent, KeyboardEvent } from 'react'
 import { useOnClickOutside } from 'hooks'
 import styled from '@emotion/styled'

@@ -1,5 +1,11 @@
-import React from 'react'
-import { FC, useState, useEffect, useRef, createContext } from 'react'
+import {
+  FC,
+  FormEvent,
+  useState,
+  useEffect,
+  useRef,
+  createContext,
+} from 'react'
 import { css } from '@emotion/react'
 import useLoadingStatus, { LoadingStatus } from './hooks/useLoadingStatus'
 import { useDelayedStatus } from './hooks/useDelayedStatus'
@@ -88,7 +94,7 @@ const Form: FC<FormProps> = ({
   }
 
   //
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const submittedErrors = validate(entries, rules)
 

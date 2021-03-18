@@ -1,5 +1,4 @@
-// import React from 'react'
-// import React, { FC } from 'react'
+import { FC } from 'react'
 //import styled from '@emotion/styled'
 
 export interface PaginationProps {
@@ -365,8 +364,6 @@ export interface PaginationProps {
 // `
 
 // export default Pagination
-
-import React, { FC } from 'react'
 
 const Pagination: FC<PaginationProps> = () => {
   return <div></div>

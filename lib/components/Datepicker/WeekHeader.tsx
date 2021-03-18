@@ -1,4 +1,3 @@
-import React from 'react'
 import { FC, useRef } from 'react'
 import styled from '@emotion/styled'
 import Week from './Week'

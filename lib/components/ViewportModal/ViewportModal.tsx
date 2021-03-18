@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from '@emotion/styled'
 import { FC, useState } from 'react'
 import ViewportModalTitleBar from './ViewportModalTitleBar'

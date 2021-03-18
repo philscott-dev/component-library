@@ -1,9 +1,8 @@
 import styled from '@emotion/styled'
 import { forwardRef, RefObject, useMemo, useState, MouseEvent } from 'react'
-import { TableDropdownConfig } from './types'
+import { TableDropdownConfig, CellState } from './types'
 import { DropdownOption, DropdownHeading, DropdownMenu } from 'components'
 import { useOnClickOutside, useOnClick } from 'hooks'
-import { CellState } from './types_new'
 import { isFunction } from 'helpers'
 // import { ServiceLinkHeading } from 'components/ServiceLinkHeading'
 

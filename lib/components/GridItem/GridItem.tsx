@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from '@emotion/styled'
 import { forwardRef, MouseEvent } from 'react'
 import { H4, Text, Anchor } from 'components'

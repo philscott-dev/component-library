@@ -1,4 +1,3 @@
-import React from 'react'
 import { FC, useMemo } from 'react'
 import styled from '@emotion/styled'
 import { getWeekOfMonth } from 'date-fns'

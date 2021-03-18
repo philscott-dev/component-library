@@ -1,6 +1,4 @@
-import React from 'react'
 import styled from '@emotion/styled'
-
 import { FC } from 'react'
 import { IconButton, H4, Overlay } from 'components'
 import { FiX } from 'react-icons/fi'

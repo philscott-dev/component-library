@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import styled from '@emotion/styled'
 import { Anchor } from 'components'
 import Slash from './Slash'

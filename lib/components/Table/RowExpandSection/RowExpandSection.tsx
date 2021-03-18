@@ -1,11 +1,9 @@
-import React from 'react'
 import styled from '@emotion/styled'
 import { FC, useState, useEffect } from 'react'
-
 import { splitAndUpperCase } from 'helpers'
 import RowExpandTitle from './RowExpandTitle'
 import RowExpandValue from './RowExpandValue'
-import { Data, CellClickFunction, CellDropdown } from '../types'
+import { Data, CellClickFunction, TableDropdownConfig } from '../types'
 
 interface RowExpandSectionProps {
   className?: string
@@ -15,7 +13,7 @@ interface RowExpandSectionProps {
   expandKey: string
   row: Data
   data: Data[]
-  cellDropdown?: CellDropdown
+  dropdownConfig?: TableDropdownConfig
   onCellClick?: CellClickFunction
 }
 const RowExpandSection: FC<RowExpandSectionProps> = ({
@@ -26,7 +24,7 @@ const RowExpandSection: FC<RowExpandSectionProps> = ({
   data,
   cellKey,
   expandKey,
-  cellDropdown,
+  dropdownConfig,
   onCellClick,
 }) => {
   const [title, setTitle] = useState('')
@@ -47,7 +45,7 @@ const RowExpandSection: FC<RowExpandSectionProps> = ({
             expandKey={expandKey}
             row={row}
             data={data}
-            cellDropdown={cellDropdown}
+            dropdownConfig={dropdownConfig}
             onCellClick={onCellClick}
           />
         ))}
