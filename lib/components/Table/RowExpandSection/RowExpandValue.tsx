@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 import { FC, useEffect, useState, MouseEvent, useRef } from 'react'
@@ -34,9 +33,9 @@ const RowExpandValue: FC<RowExpandValueProps> = ({
   onCellClick,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
-
   const cell = useValueType(rowIndex, cellKey, row)
   const [title, setTitle] = useState('')
+
   useEffect(() => {
     setTitle(splitAndUpperCase(cellKey || ''))
   }, [cellKey])
@@ -91,7 +90,7 @@ const RowExpandValue: FC<RowExpandValueProps> = ({
 export default RowExpandValue
 
 const Wrapper = styled.div`
-  display: inline;
+  display: inline-block;
   position: relative;
   box-sizing: border-box;
 `
