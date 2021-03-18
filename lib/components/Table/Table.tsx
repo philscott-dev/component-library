@@ -1,4 +1,3 @@
-import React from 'react'
 import { FC, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import Tbody from './Tbody'
@@ -13,7 +12,7 @@ import {
   Data,
   ExtraTableData,
   CellClickFunction,
-  CellDropdown,
+  TableDropdownConfig,
 } from './types'
 
 export interface TableProps {
@@ -25,7 +24,8 @@ export interface TableProps {
   className?: string
   title?: string
   subtitle?: string
-  cellDropdown?: CellDropdown
+  headingDropdownConfig?: TableDropdownConfig
+  cellDropdownConfig?: TableDropdownConfig
   onCellClick?: CellClickFunction
 }
 
@@ -38,7 +38,8 @@ const Table: FC<TableProps> = ({
   isScrollable,
   title,
   subtitle,
-  cellDropdown,
+  headingDropdownConfig,
+  cellDropdownConfig,
   onCellClick,
 }) => {
   const [tablePath, setTablePath] = useState<string[][]>([])
@@ -95,7 +96,12 @@ const Table: FC<TableProps> = ({
               }}
             /> */}
             {keys.map((key) => (
-              <Th key={key} heading={key} extraData={extraData} />
+              <Th
+                key={key}
+                heading={key}
+                extraData={extraData}
+                dropdownConfig={headingDropdownConfig}
+              />
             ))}
           </Row>
         </Thead>
@@ -111,7 +117,7 @@ const Table: FC<TableProps> = ({
                 data={data}
                 onLoadTable={handleLoadTable}
                 onCellClick={onCellClick}
-                cellDropdown={cellDropdown}
+                dropdownConfig={cellDropdownConfig}
               />
             )
           })}

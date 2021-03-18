@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { forwardRef, RefObject, useMemo, useState, MouseEvent } from 'react'
-import { CellDropdown } from './types'
+import { TableDropdownConfig } from './types'
 import { DropdownOption, DropdownHeading, DropdownMenu } from 'components'
 import { useOnClickOutside, useOnClick } from 'hooks'
 import { CellState } from './types_new'
@@ -9,12 +9,12 @@ import { isFunction } from 'helpers'
 
 interface DropdownProps {
   className?: string
-  cellDropdown?: CellDropdown
+  config?: TableDropdownConfig
   cell: CellState
 }
 
 const Dropdown = forwardRef<HTMLElement, DropdownProps>(
-  ({ className, cell, cellDropdown }, ref) => {
+  ({ className, cell, config }, ref) => {
     const [isDropdownVisible, setDropdownVisible] = useState(false)
     useOnClickOutside(
       ref as RefObject<HTMLElement>,
@@ -28,22 +28,17 @@ const Dropdown = forwardRef<HTMLElement, DropdownProps>(
       true,
     )
 
-    const title = useMemo(() => cellDropdown?.title(cell), [cellDropdown, cell])
-    const options = useMemo(() => cellDropdown?.options(cell), [
-      cellDropdown,
-      cell,
-    ])
+    const title = useMemo(() => config?.title(cell), [config, cell])
+    const options = useMemo(() => config?.options(cell), [config, cell])
     const shouldRender = useMemo(
       () =>
-        isFunction(cellDropdown?.shouldRender)
-          ? cellDropdown?.shouldRender(cell)
-          : true,
-      [cellDropdown, cell],
+        isFunction(config?.shouldRender) ? config?.shouldRender(cell) : true,
+      [config, cell],
     )
 
     const handleOptionClick = (e: MouseEvent<HTMLButtonElement>) => {
       setDropdownVisible(false)
-      cellDropdown?.onClick(e, cell)
+      config?.onClick(e, cell)
     }
 
     if (!shouldRender || (cell.type !== 'text' && cell.type !== 'date')) {

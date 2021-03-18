@@ -1,9 +1,14 @@
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 import styled from '@emotion/styled'
-import { Data, ExtraTableData, CellDropdown, CellClickFunction } from './types'
 import Td from './Td'
 import { RowExpandSection } from './RowExpandSection'
 import { get } from 'helpers'
+import {
+  Data,
+  ExtraTableData,
+  TableDropdownConfig,
+  CellClickFunction,
+} from './types'
 
 interface TrProps {
   className?: string
@@ -12,7 +17,7 @@ interface TrProps {
   originalRow: Data
   extraData?: ExtraTableData
   data: Data[]
-  cellDropdown?: CellDropdown
+  dropdownConfig?: TableDropdownConfig
   onLoadTable: (r: number, keys: string[], key: string) => void
   onCellClick?: CellClickFunction
 }
@@ -23,7 +28,7 @@ const Tr: FC<TrProps> = ({
   originalRow,
   extraData,
   data,
-  cellDropdown,
+  dropdownConfig,
   onLoadTable,
   onCellClick,
 }) => {
@@ -107,7 +112,7 @@ const Tr: FC<TrProps> = ({
             row={originalRow}
             extraData={extraData}
             data={data}
-            cellDropdown={cellDropdown}
+            dropdownConfig={dropdownConfig}
             onCellClick={handleCellClick}
           />
         ))}

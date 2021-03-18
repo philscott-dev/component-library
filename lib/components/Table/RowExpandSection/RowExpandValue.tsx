@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 import { FC, useEffect, useState, MouseEvent, useRef } from 'react'
 import { FiDatabase } from 'react-icons/fi'
 import { splitAndUpperCase } from 'helpers'
-import { Data, CellClickFunction, CellDropdown } from '../types'
+import { Data, CellClickFunction, TableDropdownConfig } from '../types'
 import { useValueType } from '../hooks/useValueType'
 import RowExpandArrow from './RowExpandArrow'
 import RowExpandValueHeading from './RowExpandValueHeading'
@@ -18,7 +18,7 @@ interface RowExpandValueProps {
   rowIndex: number
   row: Data
   data: Data[]
-  cellDropdown?: CellDropdown
+  dropdownConfig?: TableDropdownConfig
   onCellClick?: CellClickFunction
 }
 const RowExpandValue: FC<RowExpandValueProps> = ({
@@ -29,7 +29,7 @@ const RowExpandValue: FC<RowExpandValueProps> = ({
   rowIndex,
   row,
   data,
-  cellDropdown,
+  dropdownConfig,
   onCellClick,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
@@ -74,15 +74,17 @@ const RowExpandValue: FC<RowExpandValueProps> = ({
           ) : null}
         </Flex>
       </ValueButton>
-      <Dropdown
-        ref={ref}
-        cell={cell}
-        cellDropdown={cellDropdown}
-        css={css`
-          top: 50px;
-          left: 0;
-        `}
-      />
+      {dropdownConfig ? (
+        <Dropdown
+          ref={ref}
+          cell={cell}
+          config={dropdownConfig}
+          css={css`
+            top: 50px;
+            left: 0;
+          `}
+        />
+      ) : null}
     </Wrapper>
   )
 }

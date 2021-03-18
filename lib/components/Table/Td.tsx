@@ -8,7 +8,7 @@ import {
   CellType,
   ExtraTableData,
   CellClickFunction,
-  CellDropdown,
+  TableDropdownConfig,
 } from './types'
 import Dropdown from './Dropdown'
 
@@ -21,7 +21,7 @@ export interface TableHeadingProps {
   cellKey: string
   activeKey?: string
   expandKey?: string
-  cellDropdown?: CellDropdown
+  dropdownConfig?: TableDropdownConfig
   onCellClick?: CellClickFunction
 }
 
@@ -33,7 +33,7 @@ const Td: FC<TableHeadingProps> = ({
   className,
   cellKey,
   expandKey,
-  cellDropdown,
+  dropdownConfig,
   onCellClick,
 }) => {
   const wrapperRef = useRef<HTMLTableCellElement>(null)
@@ -75,7 +75,9 @@ const Td: FC<TableHeadingProps> = ({
           </>
         )}
       </Cell>
-      <Dropdown ref={wrapperRef} cell={cell} cellDropdown={cellDropdown} />
+      {dropdownConfig ? (
+        <Dropdown ref={wrapperRef} cell={cell} config={dropdownConfig} />
+      ) : null}
     </TdWrapper>
   )
 }
