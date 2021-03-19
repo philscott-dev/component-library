@@ -12,7 +12,7 @@ type StatusError = string | Error | undefined
 export default function useLoadingStatus(
   loading: boolean,
   error: StatusError,
-  threshold: number = 500,
+  threshold = 500,
 ) {
   const [loadingStatus, setLoadingStatus] = useState(LoadingStatus.Normal)
   const [shouldShowLoading, setShouldShowLoading] = useState(false)

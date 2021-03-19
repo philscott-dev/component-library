@@ -1,5 +1,4 @@
-import { parseISO } from 'date-fns'
-import { isDate } from 'lodash'
+import { parseISO, isDate } from 'date-fns'
 
 export function isDateString(x: any) {
   if (isDate(x)) {
@@ -9,20 +8,20 @@ export function isDateString(x: any) {
   return date instanceof Date && !isNaN(date.getTime())
 }
 
-export function isNumber(x: any): x is number {
+export function isNumber(x: any) {
   return typeof x === 'number'
 }
 
-export function isString(x: any): x is string {
+export function isString(x: any) {
   return typeof x === 'string'
 }
 
-export function isBoolean(x: any): x is boolean {
+export function isBoolean(x: any) {
   return typeof x === 'boolean'
 }
 
-export function isFunction(x: any): x is Function {
-  return x instanceof Function
+export function isFunction(x: any) {
+  return typeof x === 'function'
 }
 
 export function isObject(x: any) {

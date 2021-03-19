@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { LoadingStatus } from './useLoadingStatus'
 
-export const LOADING_ANIMATION_THRESHOLD: number = 200
-export const ANIMATION_SPEED: number = 700
+export const LOADING_ANIMATION_THRESHOLD = 200
+export const ANIMATION_SPEED = 700
 
 let timer: ReturnType<typeof setTimeout>
 

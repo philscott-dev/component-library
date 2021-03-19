@@ -29,7 +29,7 @@ export function handleCellValue(
     return { value: String(value), type: 'date' }
   } else if (isDate(value)) {
     return { value: String(value), type: 'date' }
-  } else if (row && rowIndex && data && isFunction(value)) {
+  } else if (value && row && rowIndex && data && isFunction(value)) {
     return {
       value: value(row, rowIndex, data),
       type: 'text',

@@ -1,7 +1,13 @@
 import styled from '@emotion/styled'
 import { forwardRef, RefObject, useMemo, useState, MouseEvent } from 'react'
 import { TableDropdownConfig, CellState } from './types'
-import { DropdownOption, DropdownHeading, DropdownMenu } from 'components'
+import {
+  DropdownOption,
+  DropdownHeading,
+  DropdownMenu,
+  Anchor,
+  Text,
+} from 'components'
 import { useOnClickOutside, useOnClick } from 'hooks'
 import { isFunction } from 'helpers'
 // import { ServiceLinkHeading } from 'components/ServiceLinkHeading'
@@ -31,7 +37,9 @@ const Dropdown = forwardRef<HTMLElement, DropdownProps>(
     const options = useMemo(() => config?.options(cell), [config, cell])
     const shouldRender = useMemo(
       () =>
-        isFunction(config?.shouldRender) ? config?.shouldRender(cell) : true,
+        config && config.shouldRender && isFunction(config.shouldRender)
+          ? config.shouldRender(cell)
+          : true,
       [config, cell],
     )
 
@@ -47,26 +55,19 @@ const Dropdown = forwardRef<HTMLElement, DropdownProps>(
     return (
       <div className={className}>
         <DropdownMenu isVisible={isDropdownVisible}>
-          <DropdownHeading>{title}</DropdownHeading>
+          {title ? <DropdownHeading>{title}</DropdownHeading> : null}
           {options?.map((option, index) => (
             <DropdownOption
               key={index}
               value={option.value}
               onMouseDown={handleOptionClick}
             >
-              {/* Pivot Secific*/}
-              {/* <ServiceLinkHeading
-                isCollapsed={false}
-                onMouseDown={() => {}}
-                title={option.title}
-                subtitle={option.subtitle}
-                color={option.color}
-                showCount={false}
-                css={css`
-                  margin-top: 8px;
-                  margin-bottom: 0;
-                `}
-              /> */}
+              <div>
+                <Anchor>{option.title}</Anchor>
+                <Text variant="deemphasized" size="small">
+                  {option.subtitle}
+                </Text>
+              </div>
             </DropdownOption>
           ))}
         </DropdownMenu>
