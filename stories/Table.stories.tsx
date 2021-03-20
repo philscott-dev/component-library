@@ -1,9 +1,17 @@
-import React from 'react'
+import { useState } from 'react'
+import { css } from '@emotion/react'
+import styled from '@emotion/styled'
 import { Theme } from './Decorators'
 import { Story, Meta } from '@storybook/react'
-import { Table, TableProps } from 'components'
+import {
+  Pagination,
+  Table,
+  TableBreadCrumbs,
+  TableContextProvider,
+  TableProps,
+} from 'components'
+import { tableDropdownConfig } from './config/tableDropdownConfig'
 import data from './mock'
-import { TableDropdownConfig } from 'lib/components/Table/types'
 
 export default {
   title: 'Table',
@@ -14,39 +22,25 @@ export default {
   },
 } as Meta
 
-const Template: Story<TableProps> = (args) => (
-  <div style={{ height: 500, overflow: 'auto' }}>
-    <Table {...args}>Click</Table>
-  </div>
-)
+const Template: Story<TableProps> = (args) => {
+  const [page, setPage] = useState(1)
 
-const tableDropdownConfig: TableDropdownConfig = {
-  shouldRender: () => true,
-  title: () => 'Dropdown',
-  options: () => [
-    {
-      title: 'Option 1',
-      subtitle: 'Subtitle 1',
-      color: '#fcfcfc',
-      value: 'yes',
-    },
-    {
-      title: 'Option 2',
-      subtitle: 'Subtitle 2',
-      color: '#fcfcfc',
-      value: 'yes',
-    },
-    {
-      title: 'Option 3',
-      subtitle: 'Subtitle 3',
-      color: '#fcfcfc',
-      value: 'yes',
-    },
-  ],
-  onClick: (e, data) => {
-    console.log(data)
-  },
+  const handleChangePage = (nextPage: number) => {
+    setPage(nextPage)
+  }
+
+  return (
+    <Wrapper>
+      <TableContextProvider>
+        <TableBreadCrumbs />
+        <Table {...args} />
+      </TableContextProvider>
+      <Pagination page={page} pageCount={10} onChangePage={handleChangePage} />
+    </Wrapper>
+  )
 }
+
+const Wrapper = styled.div``
 
 export const Primary = Template.bind({})
 Primary.args = {

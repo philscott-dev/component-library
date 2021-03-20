@@ -1,19 +1,18 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import Tbody from './Tbody'
 import Thead from './Thead'
 import Th from './Th'
 import Tr, { Row } from './Tr'
 import useUniqueKeys from './hooks/useUniqueKeys'
-import TableTitlebar from './TableTitlebar/TableTitlebar'
 import { get, splitCamalized } from 'helpers'
 import {
-  BreadCrumb,
   Data,
   ExtraTableData,
   CellClickFunction,
   TableDropdownConfig,
 } from './types'
+import { TableContext } from './TableContext'
 
 export interface TableProps {
   data: Data[]
@@ -36,39 +35,40 @@ const Table: FC<TableProps> = ({
   exclude,
   include,
   isScrollable,
-  title,
-  subtitle,
   headingDropdownConfig,
   cellDropdownConfig,
   onCellClick,
 }) => {
-  const [tablePath, setTablePath] = useState<string[][]>([])
   const [tableData, setTableData] = useState<Data[]>([])
-  const [breadCrumbs, setBreadCrumbs] = useState<BreadCrumb[]>([])
+
+  const { breadCrumbs, tablePath, setBreadCrumbs, setTablePath } = useContext(
+    TableContext,
+  )
+
+  // _.get path and get data to load
   useEffect(() => {
-    const d = get(data, tablePath.join(), data)
+    const d = get(data, tablePath?.join() ?? '', data)
     setTableData(d)
   }, [data, tablePath])
-  const keys = useUniqueKeys({ data: tableData, extraData, include, exclude })
 
-  const handleBaseBreadCrumbClick = () => {
-    setBreadCrumbs([])
-    setTablePath([])
-  }
-  const handleBreadCrumbClick = (index: number) => {
-    setBreadCrumbs(breadCrumbs.slice(0, index + 1))
-    setTablePath(tablePath.slice(0, index + 1))
-  }
+  const keys = useUniqueKeys({ data: tableData, extraData, include, exclude })
 
   const handleLoadTable = (r: number, keys: string[], key: string) => {
     const row = String(r)
     const label = splitCamalized(key).join(' ')
-    setTablePath([...tablePath, [row, ...keys, key]])
-    setBreadCrumbs([...breadCrumbs, { label: `[${r}] ${label}` }])
+    if (tablePath && breadCrumbs && setBreadCrumbs && setTablePath) {
+      setTablePath([...tablePath, [row, ...keys, key]])
+      setBreadCrumbs([...breadCrumbs, { label: `[${r}] ${label}` }])
+    }
   }
 
   const genrateRowKey = (index: number) => {
     const i = String(index)
+
+    if (!breadCrumbs) {
+      return '__home' + i
+    }
+
     const len = breadCrumbs.length - 1
     return breadCrumbs[len]?.label + i ?? '__home' + i
   }
