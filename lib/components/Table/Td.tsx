@@ -16,7 +16,7 @@ export interface TableHeadingProps {
   className?: string
   row: Data
   extraData?: ExtraTableData
-  data: Data[]
+  data?: Data[]
   rowIndex: number
   cellKey: string
   activeKey?: string

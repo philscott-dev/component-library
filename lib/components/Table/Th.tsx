@@ -40,12 +40,7 @@ const Th: FC<ThProps> = ({
     <th className={className} onClick={handleClick}>
       <Wrapper>
         <IconButton ref={ref}>
-          <FiMoreVertical
-            css={css`
-              margin-left: -3px;
-              margin-right: 2px;
-            `}
-          />
+          <FiMoreVertical />
         </IconButton>
         {elem}
       </Wrapper>
@@ -65,7 +60,7 @@ const Th: FC<ThProps> = ({
 }
 
 export default styled(Th)`
-  padding: 12px;
+  padding: 12px 0;
   padding-bottom: 16px;
   font-weight: 500;
   font-size: 12px;

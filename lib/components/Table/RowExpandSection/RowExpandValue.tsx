@@ -17,7 +17,7 @@ interface RowExpandValueProps {
   expandIndex: number
   rowIndex: number
   row: Data
-  data: Data[]
+  data?: Data[]
   dropdownConfig?: TableDropdownConfig
   onCellClick?: CellClickFunction
 }

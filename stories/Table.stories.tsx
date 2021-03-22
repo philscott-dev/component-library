@@ -1,17 +1,17 @@
-import { useState } from 'react'
-import { css } from '@emotion/react'
 import styled from '@emotion/styled'
+import faker from 'faker'
 import { Theme } from './Decorators'
 import { Story, Meta } from '@storybook/react'
+import { tableDropdownConfig } from './config/tableDropdownConfig'
 import {
   Pagination,
   Table,
   TableBreadCrumbs,
   TableContextProvider,
   TableProps,
+  useClientTable,
+  H2,
 } from 'components'
-import { tableDropdownConfig } from './config/tableDropdownConfig'
-import data from './mock'
 
 export default {
   title: 'Table',
@@ -22,8 +22,28 @@ export default {
   },
 } as Meta
 
-const Template: Story<TableProps> = (args) => {
-  const [page, setPage] = useState(1)
+const data = Array.from({ length: 5000 }, () => ({
+  firstName: faker.name.firstName(),
+  lastName: faker.name.lastName(),
+  emailAddress: faker.internet.email(),
+  info: {
+    streetAddress: faker.address.streetAddress(),
+    city: faker.address.city(),
+    state: faker.address.state(),
+    zipCode: faker.address.zipCode(),
+  },
+}))
+
+const Template: Story<TableProps> = ({
+  data,
+  headingDropdownConfig,
+  cellDropdownConfig,
+}) => {
+  const [{ page, pageData, pageCount }, setPage] = useClientTable({
+    data,
+    limit: 10,
+    term: '',
+  })
 
   const handleChangePage = (nextPage: number) => {
     setPage(nextPage)
@@ -32,19 +52,34 @@ const Template: Story<TableProps> = (args) => {
   return (
     <Wrapper>
       <TableContextProvider>
-        <TableBreadCrumbs />
-        <Table {...args} />
+        <H2>Users</H2>
+        <TableBreadCrumbs baseLabel={'All Users'} />
+        <Table
+          data={pageData}
+          headingDropdownConfig={headingDropdownConfig}
+          cellDropdownConfig={cellDropdownConfig}
+        />
       </TableContextProvider>
-      <Pagination page={page} pageCount={10} onChangePage={handleChangePage} />
+      <TablePagination
+        page={page}
+        pageCount={pageCount}
+        onChangePage={handleChangePage}
+      />
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const TablePagination = styled(Pagination)`
+  justify-content: flex-end;
+`
 
 export const Primary = Template.bind({})
 Primary.args = {
-  title: 'Data Table',
   data,
   headingDropdownConfig: tableDropdownConfig,
   cellDropdownConfig: tableDropdownConfig,

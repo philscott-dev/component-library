@@ -5,7 +5,7 @@ import { Anchor } from 'components'
 
 interface TableBasePathProps {
   className?: string
-  label: string
+  label?: string
   href?: string
   onClick: () => void
 }

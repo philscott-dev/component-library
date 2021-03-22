@@ -10,16 +10,11 @@ export default {
   argTypes: {},
 } as Meta
 
-const Template: Story<PaginationProps> = ({
-  page: defaultPage,
-  pageCount,
-  onChangePage,
-}) => {
+const Template: Story<PaginationProps> = ({ page: defaultPage, pageCount }) => {
   const [page, setPage] = useState(defaultPage)
 
   const handleChangePage = (nextPage: number) => {
     setPage(nextPage)
-    onChangePage(nextPage)
   }
 
   return (

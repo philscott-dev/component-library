@@ -16,7 +16,7 @@ interface TrProps {
   rowIndex: number
   originalRow: Data
   extraData?: ExtraTableData
-  data: Data[]
+  data?: Data[]
   dropdownConfig?: TableDropdownConfig
   onLoadTable: (r: number, keys: string[], key: string) => void
   onCellClick?: CellClickFunction

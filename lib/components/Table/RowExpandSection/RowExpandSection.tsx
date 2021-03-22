@@ -12,7 +12,7 @@ interface RowExpandSectionProps {
   cellKey: string
   expandKey: string
   row: Data
-  data: Data[]
+  data?: Data[]
   dropdownConfig?: TableDropdownConfig
   onCellClick?: CellClickFunction
 }

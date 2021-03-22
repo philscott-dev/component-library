@@ -15,14 +15,12 @@ import {
 import { TableContext } from './TableContext'
 
 export interface TableProps {
-  data: Data[]
+  data?: Data[]
   extraData?: ExtraTableData
   exclude?: string[]
   include?: string[]
   isScrollable?: boolean
   className?: string
-  title?: string
-  subtitle?: string
   headingDropdownConfig?: TableDropdownConfig
   cellDropdownConfig?: TableDropdownConfig
   onCellClick?: CellClickFunction
@@ -39,19 +37,23 @@ const Table: FC<TableProps> = ({
   cellDropdownConfig,
   onCellClick,
 }) => {
-  const [tableData, setTableData] = useState<Data[]>([])
-
+  /**
+   * Optional TableContext hook
+   * <Table> still works if not wrapped in <TableContextProvider>
+   */
   const { breadCrumbs, tablePath, setBreadCrumbs, setTablePath } = useContext(
     TableContext,
   )
+
+  const [tableData, setTableData] = useState<Data[]>([])
+
+  const keys = useUniqueKeys({ data: tableData, extraData, include, exclude })
 
   // _.get path and get data to load
   useEffect(() => {
     const d = get(data, tablePath?.join() ?? '', data)
     setTableData(d)
   }, [data, tablePath])
-
-  const keys = useUniqueKeys({ data: tableData, extraData, include, exclude })
 
   const handleLoadTable = (r: number, keys: string[], key: string) => {
     const row = String(r)
@@ -74,18 +76,10 @@ const Table: FC<TableProps> = ({
   }
 
   return (
-    <>
-      {/* <TableTitlebar
-        title={title}
-        subtitle={subtitle}
-        breadCrumbs={breadCrumbs}
-        onBaseBreadCrumbClick={handleBaseBreadCrumbClick}
-        onBreadCrumbClick={handleBreadCrumbClick}
-      /> */}
-      <table className={className}>
-        <Thead>
-          <Row>
-            {/* <Th
+    <table className={className}>
+      <Thead>
+        <Row>
+          {/* <Th
               key={'table__checkbox'}
               heading={'table__checkbox'}
               extraData={{
@@ -95,35 +89,34 @@ const Table: FC<TableProps> = ({
                 },
               }}
             /> */}
-            {keys.map((key) => (
-              <Th
-                key={key}
-                heading={key}
-                extraData={extraData}
-                dropdownConfig={headingDropdownConfig}
-              />
-            ))}
-          </Row>
-        </Thead>
-        <Tbody isScrollable={isScrollable}>
-          {tableData?.map((obj, index) => {
-            return (
-              <Tr
-                key={genrateRowKey(index)}
-                rowIndex={index}
-                keys={keys}
-                originalRow={obj}
-                extraData={extraData}
-                data={data}
-                onLoadTable={handleLoadTable}
-                onCellClick={onCellClick}
-                dropdownConfig={cellDropdownConfig}
-              />
-            )
-          })}
-        </Tbody>
-      </table>
-    </>
+          {keys.map((key) => (
+            <Th
+              key={key}
+              heading={key}
+              extraData={extraData}
+              dropdownConfig={headingDropdownConfig}
+            />
+          ))}
+        </Row>
+      </Thead>
+      <Tbody isScrollable={isScrollable}>
+        {tableData?.map((obj, index) => {
+          return (
+            <Tr
+              key={genrateRowKey(index)}
+              rowIndex={index}
+              keys={keys}
+              originalRow={obj}
+              extraData={extraData}
+              data={data}
+              onLoadTable={handleLoadTable}
+              onCellClick={onCellClick}
+              dropdownConfig={cellDropdownConfig}
+            />
+          )
+        })}
+      </Tbody>
+    </table>
   )
 }
 

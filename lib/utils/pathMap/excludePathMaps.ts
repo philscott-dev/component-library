@@ -5,7 +5,7 @@ import type { PathMap } from './types'
  * Udate this function with more rules/behaior as necessary!!!
  */
 
-export function removePathMaps(pathMap: PathMap) {
+export function excludePathMaps(pathMap: PathMap) {
   for (const [template, _paths] of Object.entries(pathMap)) {
     // remove base path always
     if (template === '*') {

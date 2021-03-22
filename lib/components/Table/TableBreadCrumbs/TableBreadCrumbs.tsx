@@ -7,12 +7,14 @@ import { TableContext } from '../TableContext'
 
 interface TableBreadCrumbsProps {
   className?: string
+  baseLabel?: string
   onClick?: (index: number, breadCrumb: BreadCrumb) => void
   onBaseClick?: () => void
 }
 
 const TableBreadCrumbs: FC<TableBreadCrumbsProps> = ({
   className,
+  baseLabel,
   onClick,
   onBaseClick,
 }) => {
@@ -40,7 +42,7 @@ const TableBreadCrumbs: FC<TableBreadCrumbsProps> = ({
 
   return (
     <Container className={className}>
-      <TableBasePath label={'test'} onClick={handleBaseBreadCrumbClick} />
+      <TableBasePath label={baseLabel} onClick={handleBaseBreadCrumbClick} />
       {breadCrumbs?.map((path, index) => (
         <TablePath
           key={index}
@@ -58,6 +60,7 @@ const Container = styled.div`
   display: inline-flex;
   align-items: center;
   text-transform: capitalize;
+  margin-bottom: 16px;
 `
 
 export default TableBreadCrumbs

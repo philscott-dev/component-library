@@ -41,9 +41,9 @@ export type CellClickFunction = (
   isExpandable: CellType,
   rowIndex: number,
   expandIndex: number,
-  cellData: any,
-  rowData: Data,
-  tableData: Data[],
+  cellData?: any,
+  rowData?: Data,
+  tableData?: Data[],
 ) => void
 
 export interface TableDropdownConfig {
