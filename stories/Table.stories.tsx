@@ -73,7 +73,7 @@ const Template: Story<TableProps> = ({
         <TableBreadCrumbs baseLabel={'All Users'} />
       </div>
 
-      <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <input value={value} onChange={handleChangeTerm} />
         <Limit value={limit} onChange={handleLimit} />
       </div>

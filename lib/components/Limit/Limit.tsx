@@ -64,7 +64,7 @@ export default styled(Limit)`
   display: inline-flex;
   align-items: center;
   > p {
-    margin-right: 8px;
+    margin-right: 16px;
     font-size: 14px;
     font-weight: 500;
   }
@@ -74,7 +74,7 @@ export default styled(Limit)`
       justify-content: center;
       align-items: center;
       border-radius: 4px;
-      padding: 2px 4px;
+      padding: 2px 8px;
       border: ${({ theme }) => `1px solid ${theme.color.white[100]}`};
       > p {
         margin-right: 2px;
