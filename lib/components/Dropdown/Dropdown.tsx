@@ -27,7 +27,11 @@ const Dropdown: FC<DropdownProps> = ({
 }) => {
   const ref = createRef<HTMLDivElement>()
   const [isVisible, setVisibility] = useState(false)
-  useOnClickOutside(ref, () => setVisibility(false), isVisible)
+  useOnClickOutside({
+    ref,
+    handler: () => setVisibility(false),
+    shouldListen: isVisible,
+  })
 
   const handleNodeClick = () => {
     setVisibility(!isVisible)

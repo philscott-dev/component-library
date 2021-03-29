@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
 import { forwardRef, RefObject, useMemo, useState, MouseEvent } from 'react'
 import { TableDropdownConfig, CellState } from './types'
+import { useOnClickOutside, useOnClick } from 'hooks'
+import { isFunction } from 'helpers'
 import {
   DropdownOption,
   DropdownHeading,
@@ -8,8 +10,6 @@ import {
   Anchor,
   Text,
 } from 'components'
-import { useOnClickOutside, useOnClick } from 'hooks'
-import { isFunction } from 'helpers'
 // import { ServiceLinkHeading } from 'components/ServiceLinkHeading'
 
 interface DropdownProps {
@@ -21,17 +21,15 @@ interface DropdownProps {
 const Dropdown = forwardRef<HTMLElement, DropdownProps>(
   ({ className, cell, config }, ref) => {
     const [isDropdownVisible, setDropdownVisible] = useState(false)
-    useOnClickOutside(
-      ref as RefObject<HTMLElement>,
-      () => setDropdownVisible(false),
-      true,
-    )
+    useOnClickOutside({
+      ref: ref as RefObject<HTMLElement>,
+      handler: () => setDropdownVisible(false),
+    })
 
-    useOnClick(
-      ref as RefObject<HTMLElement>,
-      () => setDropdownVisible(true),
-      true,
-    )
+    useOnClick({
+      ref: ref as RefObject<HTMLElement>,
+      handler: () => setDropdownVisible(true),
+    })
 
     const title = useMemo(() => config?.title(cell), [config, cell])
     const options = useMemo(() => config?.options(cell), [config, cell])

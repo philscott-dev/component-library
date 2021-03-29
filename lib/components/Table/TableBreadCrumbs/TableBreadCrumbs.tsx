@@ -60,7 +60,7 @@ const Container = styled.div`
   display: inline-flex;
   align-items: center;
   text-transform: capitalize;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 `
 
 export default TableBreadCrumbs

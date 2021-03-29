@@ -24,7 +24,11 @@ const Datepicker: FC<DatepickerProps> = ({
   const inputRef = createRef<HTMLInputElement>()
   const [isVisible, setVisible] = useState<boolean>(false)
   const [type, setType] = useState<'date' | 'text'>('text')
-  useOnClickOutside(pickerRef, () => setVisible(false), isVisible)
+  useOnClickOutside({
+    ref: pickerRef,
+    handler: () => setVisible(false),
+    shouldListen: isVisible,
+  })
 
   const handleShowPicker = () => {
     setVisible(!isVisible)

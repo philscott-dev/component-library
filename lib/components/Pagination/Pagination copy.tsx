@@ -51,7 +51,6 @@ export default styled(Pagination)`
     display: flex;
     align-items: center;
     justify-content: center;
-    border: ${({ theme }) => `1px solid ${theme.color.white[100]}`};
     border-radius: 4px;
     width: 24px;
     height: 24px;

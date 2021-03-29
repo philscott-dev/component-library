@@ -1,16 +1,21 @@
+import { useState, ChangeEvent } from 'react'
 import styled from '@emotion/styled'
 import faker from 'faker'
 import { Theme } from './Decorators'
 import { Story, Meta } from '@storybook/react'
 import { tableDropdownConfig } from './config/tableDropdownConfig'
+import { usePathMap } from 'lib/components/Table/hooks/usePathMap'
+import { useDebounce } from 'use-debounce'
 import {
   Pagination,
   Table,
   TableBreadCrumbs,
   TableContextProvider,
   TableProps,
-  useClientTable,
+  useTable,
   H2,
+  Text,
+  Limit,
 } from 'components'
 
 export default {
@@ -39,43 +44,82 @@ const Template: Story<TableProps> = ({
   headingDropdownConfig,
   cellDropdownConfig,
 }) => {
-  const [{ page, pageData, pageCount }, setPage] = useClientTable({
+  const [limit, setLimit] = useState(10)
+  const [value, setValue] = useState('')
+  const [term] = useDebounce(value, 300)
+  const { pathMap, pathKeys } = usePathMap(data)
+  const [{ page, pageData, pageCount, pageIndex, count }, setPage] = useTable({
     data,
-    limit: 10,
-    term: '',
+    limit,
+    term,
+    pathMap,
+    pathKeys,
   })
 
+  const handleChangeTerm = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.currentTarget.value)
+  }
   const handleChangePage = (nextPage: number) => {
     setPage(nextPage)
   }
+  const handleLimit = (value: number) => {
+    setLimit(value)
+  }
 
   return (
-    <Wrapper>
-      <TableContextProvider>
+    <TableContextProvider>
+      <div>
         <H2>Users</H2>
         <TableBreadCrumbs baseLabel={'All Users'} />
-        <Table
-          data={pageData}
-          headingDropdownConfig={headingDropdownConfig}
-          cellDropdownConfig={cellDropdownConfig}
-        />
-      </TableContextProvider>
-      <TablePagination
-        page={page}
-        pageCount={pageCount}
-        onChangePage={handleChangePage}
+      </div>
+
+      <div>
+        <input value={value} onChange={handleChangeTerm} />
+        <Limit value={limit} onChange={handleLimit} />
+      </div>
+      <HR />
+      <Table
+        data={pageData}
+        headingDropdownConfig={headingDropdownConfig}
+        cellDropdownConfig={cellDropdownConfig}
       />
-    </Wrapper>
+
+      <TableFooter>
+        <TextCountWrapper>
+          <Text variant="deemphasized">Showing </Text>
+          <Text variant="primary">
+            {pageIndex.start} - {pageIndex.end}
+          </Text>
+          <Text variant="deemphasized">of </Text>
+          <Text variant="primary">{count} </Text>
+          <Text variant="deemphasized">results</Text>
+        </TextCountWrapper>
+        <Pagination
+          page={page}
+          pageCount={pageCount}
+          onChangePage={handleChangePage}
+        />
+      </TableFooter>
+    </TableContextProvider>
   )
 }
 
-const Wrapper = styled.div`
+const TableFooter = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
 `
 
-const TablePagination = styled(Pagination)`
-  justify-content: flex-end;
+const TextCountWrapper = styled.div`
+  display: flex;
+  > p {
+    margin-right: 8px;
+  }
+`
+
+const HR = styled.hr`
+  color: 1px solid #9f9f9f;
 `
 
 export const Primary = Template.bind({})

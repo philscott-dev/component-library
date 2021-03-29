@@ -11,6 +11,7 @@ export interface DropdownMenuProps {
 }
 
 export default styled.div<DropdownMenuProps>`
+  display: block;
   position: absolute;
   right: ${({ direction, right }) =>
     direction === 'left' || direction?.includes('left') ? right || 0 : null}px;
@@ -23,7 +24,7 @@ export default styled.div<DropdownMenuProps>`
   z-index: 150;
   overflow: hidden;
   border-radius: 8px;
-  min-width: 200px;
+  /* min-width: 200px; */
   padding: 8px 0;
   box-shadow: 0px 4px 4px rgba(0, 0, 5, 0.25);
   background: ${({ theme }) => theme.color.gray[600]};
