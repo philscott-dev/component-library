@@ -5,7 +5,7 @@ import { PathMap } from 'utils/pathMap'
 
 export interface ClientTableOptions<T> {
   data?: T[]
-  term?: string
+  search?: string
   limit: number
   pathMap?: PathMap
   pathKeys?: string[]
@@ -21,7 +21,7 @@ export interface ClientTableState<T> {
 
 export function useTable<T>({
   data,
-  term,
+  search,
   pathMap,
   pathKeys,
   limit = 10,
@@ -46,7 +46,7 @@ export function useTable<T>({
       caseSensitive: false,
       threshold: 0.2,
     })
-    const tableData = term && term.length ? fuse.search(term) : data
+    const tableData = search && search.length ? fuse.search(search) : data
 
     /**
      * Pagingation
@@ -60,7 +60,7 @@ export function useTable<T>({
     setPageCount(Math.ceil(tableData.length / limit))
     setPageData(paginated)
     setCount(length)
-  }, [data, page, limit, term, pathKeys])
+  }, [data, page, limit, search, pathKeys])
 
   return [{ pageCount, pageData, page, pageIndex, count }, setPage]
 }

@@ -1,23 +1,19 @@
 import styled from '@emotion/styled'
-import { FC, useRef, useState, MouseEvent } from 'react'
+import { FC, useRef, useState } from 'react'
 import { useOnClickOutside } from 'hooks'
 import { IconButton, Text } from 'components'
+import { download } from 'helpers'
 import { FiChevronDown } from 'react-icons/fi'
 import { DropdownMenu, DropdownOption } from '../Dropdown'
+import { arrayToCsv } from 'utils/csv'
 
-export interface LimitProps {
+export interface ExportProps {
   className?: string
-  value: number
-  options?: number[]
-  onChange: (value: number) => void
+  data: any
+  paths?: string[]
 }
 
-const Limit: FC<LimitProps> = ({
-  className,
-  value,
-  options = [10, 50, 100],
-  onChange,
-}) => {
+const Export: FC<ExportProps> = ({ className, data, paths }) => {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const [isDropdownVisible, setDropdownVisible] = useState(false)
@@ -32,35 +28,42 @@ const Limit: FC<LimitProps> = ({
     setDropdownVisible(!isDropdownVisible)
   }
 
-  const handleOptionClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleJSON = () => {
     setDropdownVisible(false)
-    onChange(Number(e.currentTarget.value))
+    download(JSON.stringify(data), 'file.json', 'text')
+  }
+
+  const handleCSV = () => {
+    setDropdownVisible(false)
+    if (paths) {
+      download(
+        arrayToCsv(data, ['*.firstName', '*.lastName']),
+        'file.csv',
+        'text',
+      )
+    }
   }
   return (
     <span className={className}>
-      <Text variant="deemphasized">RESULTS PER PAGE</Text>
       <div>
         <IconButton ref={buttonRef} onMouseDown={handleButtonClick}>
-          <Text>{value}</Text>
+          <Text>EXPORT</Text>
           <FiChevronDown />
         </IconButton>
         <DropdownMenu ref={dropdownRef} isVisible={isDropdownVisible}>
-          {options.map((option, i) => (
-            <DropdownOption
-              key={i}
-              value={option}
-              onMouseDown={handleOptionClick}
-            >
-              <Text>{option}</Text>
-            </DropdownOption>
-          ))}
+          <DropdownOption value={'json'} onMouseDown={handleJSON}>
+            <Text>JSON</Text>
+          </DropdownOption>
+          <DropdownOption value={'csv'} onMouseDown={handleCSV}>
+            <Text>CSV</Text>
+          </DropdownOption>
         </DropdownMenu>
       </div>
     </span>
   )
 }
 
-export default styled(Limit)`
+export default styled(Export)`
   display: inline-flex;
   align-items: center;
   > p {

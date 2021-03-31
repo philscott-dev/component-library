@@ -1,11 +1,10 @@
-import { useState, ChangeEvent } from 'react'
+import { ChangeEvent } from 'react'
 import styled from '@emotion/styled'
 import faker from 'faker'
 import { Theme } from './Decorators'
 import { Story, Meta } from '@storybook/react'
 import { tableDropdownConfig } from './config/tableDropdownConfig'
-import { usePathMap } from 'lib/components/Table/hooks/usePathMap'
-import { useDebounce } from 'use-debounce'
+import { useTableInput, usePathMap } from 'lib/components/Table/hooks'
 import {
   Pagination,
   Table,
@@ -16,6 +15,8 @@ import {
   H2,
   Text,
   Limit,
+  Export,
+  Search,
 } from 'components'
 
 export default {
@@ -37,6 +38,11 @@ const data = Array.from({ length: 5000 }, () => ({
     state: faker.address.state(),
     zipCode: faker.address.zipCode(),
   },
+  data: Array.from({ length: 5 }, () => ({
+    count: Math.round(Math.random() * 100),
+    month: faker.date.month(),
+    year: faker.music.genre(),
+  })),
 }))
 
 const Template: Story<TableProps> = ({
@@ -44,20 +50,19 @@ const Template: Story<TableProps> = ({
   headingDropdownConfig,
   cellDropdownConfig,
 }) => {
-  const [limit, setLimit] = useState(10)
-  const [value, setValue] = useState('')
-  const [term] = useDebounce(value, 300)
-  const { pathMap, pathKeys } = usePathMap(data)
+  const [search, setSearch] = useTableInput({ defaultValue: '', delay: 300 })
+  const [limit, setLimit] = useTableInput({ defaultValue: 10 })
+  const { pathMap, pathKeys, paths } = usePathMap(data)
   const [{ page, pageData, pageCount, pageIndex, count }, setPage] = useTable({
     data,
-    limit,
-    term,
     pathMap,
     pathKeys,
+    limit: limit.delayed,
+    search: search.delayed,
   })
 
   const handleChangeTerm = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.currentTarget.value)
+    setSearch(e.currentTarget.value)
   }
   const handleChangePage = (nextPage: number) => {
     setPage(nextPage)
@@ -68,15 +73,18 @@ const Template: Story<TableProps> = ({
 
   return (
     <TableContextProvider>
-      <div>
-        <H2>Users</H2>
-        <TableBreadCrumbs baseLabel={'All Users'} />
-      </div>
+      <TableHeader align="flex-start">
+        <div>
+          <H2>Users</H2>
+          <TableBreadCrumbs baseLabel={'All Users'} />
+        </div>
+        <Export data={data} paths={paths} />
+      </TableHeader>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <input value={value} onChange={handleChangeTerm} />
-        <Limit value={limit} onChange={handleLimit} />
-      </div>
+      <TableHeader>
+        <Search value={search.input} onChange={handleChangeTerm} />
+        <Limit value={limit.input} onChange={handleLimit} />
+      </TableHeader>
       <HR />
       <Table
         data={pageData}
@@ -104,6 +112,20 @@ const Template: Story<TableProps> = ({
   )
 }
 
+interface TableHeaderProps {
+  align?: 'flex-start' | 'center' | 'flex-end'
+}
+
+const TableHeader = styled.div<TableHeaderProps>`
+  display: flex;
+  justify-content: space-between;
+  align-items: ${({ align }) => align || 'center'};
+  > div h2 {
+    margin-bottom: 12px;
+  }
+  margin-bottom: 12px;
+`
+
 const TableFooter = styled.div`
   display: flex;
   justify-content: space-between;
@@ -119,7 +141,8 @@ const TextCountWrapper = styled.div`
 `
 
 const HR = styled.hr`
-  color: 1px solid #9f9f9f;
+  border: 1px solid ${({ theme }) => theme.color.gray[300]};
+  margin-top: 16px;
 `
 
 export const Primary = Template.bind({})
