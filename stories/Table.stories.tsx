@@ -105,6 +105,8 @@ const Template: Story<TableProps> = ({
         <Pagination
           page={page}
           pageCount={pageCount}
+          menuHorizontal="left"
+          menuVertical="up"
           onChangePage={handleChangePage}
         />
       </TableFooter>

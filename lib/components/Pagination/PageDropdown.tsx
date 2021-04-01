@@ -3,18 +3,23 @@ import { FC, MouseEvent, useEffect, useRef, useState } from 'react'
 import { DropdownMenu, DropdownOption, IconButton, Text } from 'components'
 import { useOnClickOutside } from 'hooks'
 import PageArrows from './PageArrows'
+import { MenuHorizontal, MenuVertical } from './Pagination'
 
 export interface PageDropdownProps {
   className?: string
   page: number
   pageCount: number
   onClickPage: (nextPage: number) => void
+  menuVertical?: MenuVertical
+  menuHorizontal?: MenuHorizontal
 }
 
 const PageDropdown: FC<PageDropdownProps> = ({
   className,
   page,
   pageCount,
+  menuHorizontal,
+  menuVertical,
   onClickPage,
 }) => {
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -43,7 +48,11 @@ const PageDropdown: FC<PageDropdownProps> = ({
     onClickPage(Number(e.currentTarget.value))
   }
   return (
-    <div className={className}>
+    <Dropdown
+      className={className}
+      menuVertical={menuVertical}
+      menuHorizontal={menuHorizontal}
+    >
       <IconButton ref={buttonRef} onMouseDown={handleButtonClick}>
         <Text>{page}</Text>
         <PageArrows />
@@ -55,11 +64,14 @@ const PageDropdown: FC<PageDropdownProps> = ({
           </DropdownOption>
         ))}
       </DropdownMenu>
-    </div>
+    </Dropdown>
   )
 }
 
-export default styled(PageDropdown)`
+export default PageDropdown
+
+type DropdownProps = Pick<PageDropdownProps, 'menuHorizontal' | 'menuVertical'>
+const Dropdown = styled.div<DropdownProps>`
   position: relative;
   > button {
     display: flex;
@@ -76,8 +88,8 @@ export default styled(PageDropdown)`
     max-height: 285px;
     overflow-y: auto;
     flex-wrap: wrap;
-    /* right: 0;
-    bottom: 0; */
+    right: ${({ menuHorizontal }) => (menuHorizontal === 'left' ? 0 : null)};
+    bottom: ${({ menuVertical }) => (menuVertical === 'up' ? 0 : null)};
     > button {
       flex: 1;
       min-width: 65px;

@@ -4,17 +4,24 @@ import { Text, IconButton } from 'components'
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
 import PageDropdown from './PageDropdown'
 
+export type MenuVertical = 'up' | 'down'
+export type MenuHorizontal = 'left' | 'right'
+
 export interface PaginationProps {
   className?: string
   page: number
   pageCount: number
   onChangePage: (nextPage: number) => void
+  menuVertical?: MenuVertical
+  menuHorizontal?: MenuHorizontal
 }
 
 const Pagination: FC<PaginationProps> = ({
   className,
   page,
   pageCount,
+  menuVertical,
+  menuHorizontal,
   onChangePage,
 }) => {
   const handlePageUp = () => {
@@ -44,6 +51,8 @@ const Pagination: FC<PaginationProps> = ({
         page={page}
         pageCount={pageCount}
         onClickPage={handleClickPage}
+        menuHorizontal={menuHorizontal}
+        menuVertical={menuVertical}
       />
       <Text variant="light">of</Text>
       <Text>{pageCount}</Text>
