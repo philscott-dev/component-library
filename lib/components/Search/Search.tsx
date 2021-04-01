@@ -44,13 +44,13 @@ export default styled(Search)`
     box-sizing: border-box;
     height: inherit;
     outline: none;
-    border-radius: 4px;
+    border-radius: 32px;
     padding-left: 40px;
     font-weight: 500;
-    border: none;
     font-size: 14px;
     font-weight: 400;
     width: 400px;
+    border: 1px solid ${({ theme }) => theme.color.gray[600]};
     background: ${({ theme }) => theme.color.indigo[400]};
     color: ${({ theme }) => theme.color.white[100]};
     font-family: ${({ theme }) => theme.font.family};

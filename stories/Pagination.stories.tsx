@@ -29,6 +29,6 @@ const Template: Story<PaginationProps> = ({ page: defaultPage, pageCount }) => {
 export const Default = Template.bind({})
 Default.args = {
   page: 1,
-  pageCount: 10,
+  pageCount: 4,
   onChangePage: (nextPage) => console.log(nextPage),
 }

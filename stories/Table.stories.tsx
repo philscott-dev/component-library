@@ -50,7 +50,7 @@ const Template: Story<TableProps> = ({
   headingDropdownConfig,
   cellDropdownConfig,
 }) => {
-  const [search, setSearch] = useTableInput({ defaultValue: '', delay: 300 })
+  const [search, setSearch] = useTableInput({ defaultValue: '', delay: 200 })
   const [limit, setLimit] = useTableInput({ defaultValue: 10 })
   const { pathMap, pathKeys, paths } = usePathMap(data)
   const [{ page, pageData, pageCount, pageIndex, count }, setPage] = useTable({
@@ -141,7 +141,7 @@ const TextCountWrapper = styled.div`
 `
 
 const HR = styled.hr`
-  border: 1px solid ${({ theme }) => theme.color.gray[300]};
+  border: 1px solid ${({ theme }) => theme.color.gray[600]};
   margin-top: 16px;
 `
 

@@ -116,6 +116,7 @@ const Cell = styled.button<{ cell: CellType; isExpanded: boolean }>`
   min-height: 40px;
   width: 100%;
   cursor: pointer;
+  user-select: text;
   border: 2px solid transparent;
   background: ${({ theme, isExpanded }) =>
     isExpanded ? theme.color.indigo[300] : theme.color.indigo[400]};
