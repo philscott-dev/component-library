@@ -11,9 +11,9 @@ export interface PaginationProps {
   className?: string
   page: number
   pageCount: number
-  onChangePage: (nextPage: number) => void
   menuVertical?: MenuVertical
   menuHorizontal?: MenuHorizontal
+  onChangePage: (nextPage: number) => void
 }
 
 const Pagination: FC<PaginationProps> = ({

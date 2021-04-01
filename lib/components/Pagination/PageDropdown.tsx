@@ -9,9 +9,9 @@ export interface PageDropdownProps {
   className?: string
   page: number
   pageCount: number
-  onClickPage: (nextPage: number) => void
   menuVertical?: MenuVertical
   menuHorizontal?: MenuHorizontal
+  onClickPage: (nextPage: number) => void
 }
 
 const PageDropdown: FC<PageDropdownProps> = ({
