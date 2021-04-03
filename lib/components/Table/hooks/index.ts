@@ -1,3 +1,4 @@
 export * from './useTableInput'
 export * from './usePathMap'
-export * from './useTable'
+export * from './usePagination'
+export * from './useSearch'

@@ -2,21 +2,25 @@ import { ChangeEvent, useContext } from 'react'
 import styled from '@emotion/styled'
 import { Story, Meta } from '@storybook/react'
 import { tableDropdownConfig } from './config/tableDropdownConfig'
-import { useTableInput, usePathMap } from 'lib/components/Table/hooks'
 import { TableDataProvider, Theme } from './decorators'
 import {
   Pagination,
   Table,
   TableBreadCrumbs,
   TableProps,
-  useTable,
   H2,
   Text,
   Limit,
   Export,
   Search,
+  TableContext,
 } from 'components'
-import { TableContext } from 'lib/components/Table/TableContext'
+import {
+  useTableInput,
+  usePathMap,
+  usePagination,
+  useSearch,
+} from 'lib/components/Table/hooks'
 
 export default {
   title: 'Table',
@@ -31,16 +35,25 @@ const Template: Story<TableProps> = ({
   headingDropdownConfig,
   cellDropdownConfig,
 }) => {
-  const { tableData } = useContext(TableContext)
+  const { tableData: data } = useContext(TableContext)
+  /**
+   * State
+   */
   const [search, setSearch] = useTableInput({ defaultValue: '', delay: 200 })
   const [limit, setLimit] = useTableInput({ defaultValue: 10 })
-  const { pathMap, pathKeys, paths } = usePathMap(tableData)
-  const [{ page, pageData, pageCount, pageIndex, count }, setPage] = useTable({
-    data: tableData,
-    pathMap,
-    pathKeys,
+
+  /**
+   * Effects
+   */
+
+  const { pathMap, pathKeys, paths } = usePathMap(data)
+  const searchResult = useSearch({ data, pathKeys, search: search.delayed })
+  const [
+    { page, pageData, pageCount, pageIndex, count },
+    setPage,
+  ] = usePagination({
+    data: searchResult,
     limit: limit.delayed,
-    search: search.delayed,
   })
 
   const handleChangeTerm = (e: ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +73,7 @@ const Template: Story<TableProps> = ({
           <H2>Users</H2>
           <TableBreadCrumbs baseLabel={'All Users'} />
         </div>
-        <Export data={tableData} paths={paths} />
+        <Export data={data} paths={paths} />
       </TableHeader>
 
       <TableHeader>

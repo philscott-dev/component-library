@@ -1,6 +1,5 @@
 export { default as Table } from './Table'
-export { TableBreadCrumbs } from './TableBreadCrumbs'
-export { TableContextProvider } from './TableContext'
 export type { TableProps } from './Table'
 export type { TableDropdownConfig } from './types'
-export { useTable } from './hooks/useTable'
+export { TableBreadCrumbs } from './TableBreadCrumbs'
+export { TableContextProvider, TableContext } from './TableContext'

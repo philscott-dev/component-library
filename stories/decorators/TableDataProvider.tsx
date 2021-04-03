@@ -6,10 +6,11 @@ import { TableContextProvider } from 'components'
 export const TableDataProvider = (Story: () => StoryFnReactReturnType) => {
   const [tableData, setTableData] = useState<any[]>([])
   useEffect(() => {
-    const data = Array.from({ length: 5000 }, () => ({
+    const data = Array.from({ length: 500 }, () => ({
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       emailAddress: faker.internet.email(),
+      list: Array.from({ length: 20 }, (_, i) => i),
       info: {
         streetAddress: faker.address.streetAddress(),
         city: faker.address.city(),
