@@ -1,7 +1,7 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import { IconButton } from 'components'
-import { Theme } from './Decorators'
+import { Theme } from './decorators'
 import { FiInfo } from 'react-icons/fi'
 
 export default {

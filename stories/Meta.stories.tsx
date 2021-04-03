@@ -1,5 +1,5 @@
 import React from 'react'
-import { Theme } from './Decorators'
+import { Theme } from './decorators'
 import { Story, Meta as MetaType } from '@storybook/react'
 import { Meta, MetaProps } from 'components'
 

@@ -1,4 +1,4 @@
-import { Theme } from './Decorators'
+import { Theme } from './decorators'
 import { Story, Meta } from '@storybook/react'
 import { Pagination, PaginationProps } from 'components'
 import { useState } from 'react'

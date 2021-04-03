@@ -1,5 +1,5 @@
 import React from 'react'
-import { Theme } from './Decorators'
+import { Theme } from './decorators'
 import { Story, Meta } from '@storybook/react'
 import { Overlay, OverlayProps } from 'components'
 

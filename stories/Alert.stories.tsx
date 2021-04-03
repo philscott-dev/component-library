@@ -1,7 +1,7 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import { Alert } from 'components'
-import { Theme } from './Decorators'
+import { Theme } from './decorators'
 
 export default {
   title: 'Alert',

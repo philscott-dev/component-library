@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Theme } from './Decorators'
+import { Theme } from './decorators'
 import { Story, Meta } from '@storybook/react'
 import { Search, SearchProps } from 'components'
 

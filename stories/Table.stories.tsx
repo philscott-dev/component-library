@@ -1,15 +1,13 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useContext } from 'react'
 import styled from '@emotion/styled'
-import faker from 'faker'
-import { Theme } from './Decorators'
 import { Story, Meta } from '@storybook/react'
 import { tableDropdownConfig } from './config/tableDropdownConfig'
 import { useTableInput, usePathMap } from 'lib/components/Table/hooks'
+import { TableDataProvider, Theme } from './decorators'
 import {
   Pagination,
   Table,
   TableBreadCrumbs,
-  TableContextProvider,
   TableProps,
   useTable,
   H2,
@@ -18,43 +16,27 @@ import {
   Export,
   Search,
 } from 'components'
+import { TableContext } from 'lib/components/Table/TableContext'
 
 export default {
   title: 'Table',
   component: Table,
-  decorators: [Theme],
+  decorators: [Theme, TableDataProvider],
   argTypes: {
     // backgroundColor: { control: 'color' },
   },
 } as Meta
 
-const data = Array.from({ length: 5000 }, () => ({
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-  emailAddress: faker.internet.email(),
-  info: {
-    streetAddress: faker.address.streetAddress(),
-    city: faker.address.city(),
-    state: faker.address.state(),
-    zipCode: faker.address.zipCode(),
-  },
-  data: Array.from({ length: 5 }, () => ({
-    count: Math.round(Math.random() * 100),
-    month: faker.date.month(),
-    year: faker.music.genre(),
-  })),
-}))
-
 const Template: Story<TableProps> = ({
-  data,
   headingDropdownConfig,
   cellDropdownConfig,
 }) => {
+  const { tableData } = useContext(TableContext)
   const [search, setSearch] = useTableInput({ defaultValue: '', delay: 200 })
   const [limit, setLimit] = useTableInput({ defaultValue: 10 })
-  const { pathMap, pathKeys, paths } = usePathMap(data)
+  const { pathMap, pathKeys, paths } = usePathMap(tableData)
   const [{ page, pageData, pageCount, pageIndex, count }, setPage] = useTable({
-    data,
+    data: tableData,
     pathMap,
     pathKeys,
     limit: limit.delayed,
@@ -72,13 +54,13 @@ const Template: Story<TableProps> = ({
   }
 
   return (
-    <TableContextProvider>
+    <>
       <TableHeader align="flex-start">
         <div>
           <H2>Users</H2>
           <TableBreadCrumbs baseLabel={'All Users'} />
         </div>
-        <Export data={data} paths={paths} />
+        <Export data={tableData} paths={paths} />
       </TableHeader>
 
       <TableHeader>
@@ -87,7 +69,7 @@ const Template: Story<TableProps> = ({
       </TableHeader>
       <HR />
       <Table
-        data={pageData}
+        tableData={pageData}
         headingDropdownConfig={headingDropdownConfig}
         cellDropdownConfig={cellDropdownConfig}
       />
@@ -110,7 +92,7 @@ const Template: Story<TableProps> = ({
           onChangePage={handleChangePage}
         />
       </TableFooter>
-    </TableContextProvider>
+    </>
   )
 }
 
@@ -149,7 +131,7 @@ const HR = styled.hr`
 
 export const Primary = Template.bind({})
 Primary.args = {
-  data,
+  tableData: [],
   headingDropdownConfig: tableDropdownConfig,
   cellDropdownConfig: tableDropdownConfig,
 }

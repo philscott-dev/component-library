@@ -10,7 +10,7 @@ import {
   DropdownDivider,
   Button,
 } from 'components'
-import { Theme } from './Decorators'
+import { Theme } from './decorators'
 
 export default {
   title: 'Dropdown',
