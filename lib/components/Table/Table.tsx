@@ -1,21 +1,21 @@
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useContext } from 'react'
 import styled from '@emotion/styled'
 import Tbody from './Tbody'
 import Thead from './Thead'
 import Th from './Th'
 import Tr, { Row } from './Tr'
 import useUniqueKeys from './hooks/useUniqueKeys'
-import { get, splitCamalized } from 'helpers'
-import {
+import { splitCamalized } from 'helpers'
+import { TableContext } from './TableContext'
+import type {
   Data,
   ExtraTableData,
   CellClickFunction,
   TableDropdownConfig,
 } from './types'
-import { TableContext } from './TableContext'
 
 export interface TableProps {
-  data?: Data[]
+  tableData?: Data[]
   extraData?: ExtraTableData
   exclude?: string[]
   include?: string[]
@@ -27,8 +27,8 @@ export interface TableProps {
 }
 
 const Table: FC<TableProps> = ({
+  tableData = [],
   className,
-  data,
   extraData,
   exclude,
   include,
@@ -45,15 +45,7 @@ const Table: FC<TableProps> = ({
     TableContext,
   )
 
-  const [tableData, setTableData] = useState<Data[]>([])
-
   const keys = useUniqueKeys({ data: tableData, extraData, include, exclude })
-
-  // _.get path and get data to load
-  useEffect(() => {
-    const d = get(data, tablePath?.join() ?? '', data)
-    setTableData(d)
-  }, [data, tablePath])
 
   const handleLoadTable = (r: number, keys: string[], key: string) => {
     const row = String(r)
@@ -108,7 +100,7 @@ const Table: FC<TableProps> = ({
               keys={keys}
               originalRow={obj}
               extraData={extraData}
-              data={data}
+              data={tableData}
               onLoadTable={handleLoadTable}
               onCellClick={onCellClick}
               dropdownConfig={cellDropdownConfig}

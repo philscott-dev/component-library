@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import Td from './Td'
 import { RowExpandSection } from './RowExpandSection'
@@ -34,6 +34,11 @@ const Tr: FC<TrProps> = ({
 }) => {
   const [activeKey, setActiveKey] = useState<string>() // any clicked key cells key
   const [expandKeys, setExpandKeys] = useState<string[]>([]) // array of expanded keys
+
+  // should hopefully reset expand keys if data changes
+  useEffect(() => {
+    setExpandKeys([])
+  }, [keys])
 
   const handleCellClick: CellClickFunction = (
     e,
