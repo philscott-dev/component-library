@@ -63,6 +63,9 @@ const PageDropdown: FC<PageDropdownProps> = ({
             <Text>{page}</Text>
           </DropdownOption>
         ))}
+        {Array.from({ length: pages.length % 4 }, (_, i) => (
+          <div key={pages.length + i} style={{ flex: 1, minWidth: 65 }} />
+        ))}
       </DropdownMenu>
     </Dropdown>
   )
