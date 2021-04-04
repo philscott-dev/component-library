@@ -41,9 +41,9 @@ const Wrapper = styled.div<{ isVisible: boolean }>`
   padding: 0 40px 32px 40px;
   position: fixed;
   left: 50%;
-  top: 35%;
+  top: 50%;
   transform: translate(-50%, -50%);
-  margin: 0 auto;
+  margin: auto auto;
   background: ${({ theme }) => theme.color.indigo[600]};
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};

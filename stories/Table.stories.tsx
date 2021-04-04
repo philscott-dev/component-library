@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ChangeEvent, useContext, useState } from 'react'
+import { ChangeEvent, useContext, useMemo, useState } from 'react'
 import { Story, Meta } from '@storybook/react'
 import { tableDropdownConfig } from './config/tableDropdownConfig'
 import { TableDataProvider, Theme } from './decorators'
@@ -24,6 +24,8 @@ import {
   useSearch,
 } from 'lib/components/Table/hooks'
 import { FiSettings } from 'react-icons/fi'
+import { flattenData, getMetadata } from 'utils/pathMap'
+import { getPathsFromTemplates } from 'lib/utils/pathMap/getPathsFromTemplates'
 
 export default {
   title: 'Table',
@@ -47,13 +49,22 @@ const Template: Story<TableProps> = ({
   const [limit, setLimit] = useTableInput({ defaultValue: 10 })
   const [isModalVisible, setModalVisibility] = useState(false)
   const [userPaths, setUserPaths] = useState<string[] | undefined>(paths)
+  const flattenedData = useMemo(() => {
+    if (!userPaths || !pathMap) {
+      return tableData
+    }
+    const p = getPathsFromTemplates(userPaths, pathMap)
+    const metadata = getMetadata(tableData, p)
+    const flat = flattenData(tableData, metadata)
+    return flat
+  }, [userPaths, tableData, pathMap])
 
   /**
    * Effects
    */
 
   const searchResult = useSearch({
-    data: tableData,
+    data: flattenedData,
     pathKeys,
     search: search.delayed,
   })
@@ -82,8 +93,9 @@ const Template: Story<TableProps> = ({
     setModalVisibility(false)
   }
 
-  const handleConfirmModal = () => {
+  const handleConfirmModal = (selectedPaths: string[]) => {
     setModalVisibility(false)
+    setUserPaths(selectedPaths)
   }
 
   return (

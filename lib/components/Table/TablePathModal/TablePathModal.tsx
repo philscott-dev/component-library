@@ -1,13 +1,14 @@
 import styled from '@emotion/styled'
-import { FC, useEffect, useState } from 'react'
+import { FC, MouseEvent, useState } from 'react'
 import { Modal, ModalProps, Text, Button } from 'components'
 import { PathMap } from 'utils/pathMap'
+import { FiCheckSquare, FiSquare } from 'react-icons/fi'
 
 interface TablePathModalProps
   extends Pick<ModalProps, 'className' | 'isVisible' | 'onClose'> {
   pathMap?: PathMap
   userPaths?: string[]
-  onConfirm: () => void
+  onConfirm: (paths: string[]) => void
 }
 
 const TablePathModal: FC<TablePathModalProps> = ({
@@ -18,17 +19,21 @@ const TablePathModal: FC<TablePathModalProps> = ({
   onClose,
   onConfirm,
 }) => {
-  const [paths, setPaths] = useState<{ isSelected: boolean; path: string }[]>(
-    [],
-  )
-  useEffect(() => {
-    setPaths(
-      Object.entries(pathMap).map(([path]) => ({
-        isSelected: false,
-        path: path.substring(2),
-      })),
-    )
-  }, [pathMap])
+  const [selected, setSelected] = useState<string[]>(userPaths)
+
+  const handleSelectPath = (e: MouseEvent<HTMLButtonElement>) => {
+    const { value } = e.currentTarget
+    const index = selected.indexOf(value)
+    if (index >= 0) {
+      setSelected([...selected.slice(0, index), ...selected.slice(index + 1)])
+    } else {
+      setSelected([...selected, value])
+    }
+  }
+
+  const handleConfirm = () => {
+    onConfirm(selected)
+  }
   return (
     <Modal
       className={className}
@@ -38,15 +43,28 @@ const TablePathModal: FC<TablePathModalProps> = ({
     >
       <Text>Please select path properties</Text>
       <Body>
-        {paths.map(({ isSelected, path }) => (
-          <Text>{path}</Text>
-        ))}
+        {Object.entries(pathMap)
+          .sort()
+          .map(([path]) => (
+            <OptionButton
+              key={path}
+              value={path}
+              onMouseDown={handleSelectPath}
+            >
+              {selected.some((val) => path == val) ? (
+                <FiCheckSquare />
+              ) : (
+                <FiSquare />
+              )}
+              <Text>{path.substring(2)}</Text>
+            </OptionButton>
+          ))}
       </Body>
       <Flex>
         <ModalButton variant="tertiary" onMouseDown={onClose}>
           Cancel
         </ModalButton>
-        <ModalButton onMouseDown={onConfirm}>Confirm</ModalButton>
+        <ModalButton onMouseDown={handleConfirm}>Confirm</ModalButton>
       </Flex>
     </Modal>
   )
@@ -54,10 +72,44 @@ const TablePathModal: FC<TablePathModalProps> = ({
 
 export default styled(TablePathModal)``
 
-const Body = styled.div``
+const Body = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 32px;
+`
 
 const Flex = styled.div`
   display: flex;
+  > button {
+    box-shadow: none;
+  }
+`
+
+const OptionButton = styled.button`
+  flex: 1;
+  min-width: 400px;
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: transparent;
+  border: 1px solid ${({ theme }) => theme.color.blue[300]};
+  margin: 8px 0;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  > svg {
+    color: ${({ theme }) => theme.color.white[100]};
+    font-size: 20px;
+    margin-right: 20px;
+  }
+  &:hover {
+    > p {
+      color: ${({ theme }) => theme.color.blue[300]};
+      transition: all 0.2s ease-in-out;
+    }
+  }
 `
 
 const ModalButton = styled(Button)`
