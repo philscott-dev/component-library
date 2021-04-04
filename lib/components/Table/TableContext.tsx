@@ -13,6 +13,7 @@ export interface TableContextProps {
   tableData?: Data[]
   tablePath?: string[][]
   breadCrumbs?: BreadCrumb[]
+  data?: Data[]
   setBreadCrumbs?: Dispatch<SetStateAction<BreadCrumb[]>>
   setTablePath?: Dispatch<SetStateAction<string[][]>>
 }
@@ -20,6 +21,7 @@ export interface TableContextProps {
 export const TableContext = createContext<TableContextProps>({
   tableData: [],
   tablePath: [],
+  data: [],
   breadCrumbs: [],
 })
 
@@ -47,6 +49,7 @@ export const TableContextProvider: FC<TableContextProviderProps> = ({
         breadCrumbs,
         tablePath,
         tableData,
+        data,
         setTablePath,
         setBreadCrumbs,
       }}

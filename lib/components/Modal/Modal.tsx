@@ -4,17 +4,24 @@ import { IconButton, H4, Overlay } from 'components'
 import { FiX } from 'react-icons/fi'
 
 export interface ModalProps {
+  className?: string
   title: string
   children: any
   isVisible: boolean
   onClose?: () => void
 }
 
-const Modal: FC<ModalProps> = ({ title, children, isVisible, onClose }) => {
+const Modal: FC<ModalProps> = ({
+  className,
+  title,
+  children,
+  isVisible,
+  onClose,
+}) => {
   return (
     <>
       <Overlay isVisible={isVisible} />
-      <Wrapper isVisible={isVisible}>
+      <Wrapper className={className} isVisible={isVisible}>
         <TitleBar>
           <Title>{title}</Title>
           {onClose ? (

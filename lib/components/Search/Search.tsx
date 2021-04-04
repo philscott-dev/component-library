@@ -50,8 +50,8 @@ export default styled(Search)`
     font-size: 14px;
     font-weight: 400;
     width: 400px;
-    border: 1px solid ${({ theme }) => theme.color.gray[600]};
-    background: ${({ theme }) => theme.color.indigo[400]};
+    border: none;
+    background: ${({ theme }) => theme.color.indigo[300]};
     color: ${({ theme }) => theme.color.white[100]};
     font-family: ${({ theme }) => theme.font.family};
     ::placeholder {

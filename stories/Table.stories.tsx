@@ -1,5 +1,5 @@
-import { ChangeEvent, useContext } from 'react'
 import styled from '@emotion/styled'
+import { ChangeEvent, useContext, useState } from 'react'
 import { Story, Meta } from '@storybook/react'
 import { tableDropdownConfig } from './config/tableDropdownConfig'
 import { TableDataProvider, Theme } from './decorators'
@@ -14,6 +14,8 @@ import {
   Export,
   Search,
   TableContext,
+  TablePathModal,
+  IconButton,
 } from 'components'
 import {
   useTableInput,
@@ -21,6 +23,7 @@ import {
   usePagination,
   useSearch,
 } from 'lib/components/Table/hooks'
+import { FiSettings } from 'react-icons/fi'
 
 export default {
   title: 'Table',
@@ -35,19 +38,25 @@ const Template: Story<TableProps> = ({
   headingDropdownConfig,
   cellDropdownConfig,
 }) => {
-  const { tableData: data } = useContext(TableContext)
+  const { tableData, data } = useContext(TableContext)
+  const { pathMap, pathKeys, paths } = usePathMap(data)
   /**
    * State
    */
   const [search, setSearch] = useTableInput({ defaultValue: '', delay: 200 })
   const [limit, setLimit] = useTableInput({ defaultValue: 10 })
+  const [isModalVisible, setModalVisibility] = useState(false)
+  const [userPaths, setUserPaths] = useState<string[] | undefined>(paths)
 
   /**
    * Effects
    */
 
-  const { pathMap, pathKeys, paths } = usePathMap(data)
-  const searchResult = useSearch({ data, pathKeys, search: search.delayed })
+  const searchResult = useSearch({
+    data: tableData,
+    pathKeys,
+    search: search.delayed,
+  })
   const [
     { page, pageData, pageCount, pageIndex, count },
     setPage,
@@ -65,17 +74,33 @@ const Template: Story<TableProps> = ({
   const handleLimit = (value: number) => {
     setLimit(value)
   }
+  const handleShowModal = () => {
+    setModalVisibility(true)
+  }
+
+  const handleHideModal = () => {
+    setModalVisibility(false)
+  }
+
+  const handleConfirmModal = () => {
+    setModalVisibility(false)
+  }
 
   return (
     <>
-      <TableHeader align="flex-start">
+      <TableHeader>
         <div>
           <H2>Users</H2>
           <TableBreadCrumbs baseLabel={'All Users'} />
         </div>
-        <Export data={data} paths={paths} />
+        <Toolbar>
+          <IconButton onMouseDown={handleShowModal}>
+            <FiSettings />
+            <Text variant="light">Configure</Text>
+          </IconButton>
+          <Export data={data} paths={paths} />
+        </Toolbar>
       </TableHeader>
-
       <TableHeader>
         <Search value={search.input} onChange={handleChangeTerm} />
         <Limit value={limit.input} onChange={handleLimit} />
@@ -105,6 +130,13 @@ const Template: Story<TableProps> = ({
           onChangePage={handleChangePage}
         />
       </TableFooter>
+      <TablePathModal
+        isVisible={isModalVisible}
+        pathMap={pathMap}
+        userPaths={[]}
+        onClose={handleHideModal}
+        onConfirm={handleConfirmModal}
+      />
     </>
   )
 }
@@ -137,9 +169,32 @@ const TextCountWrapper = styled.div`
   }
 `
 
+const Toolbar = styled.span`
+  display: flex;
+  align-self: flex-start;
+  > button {
+    margin-right: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    padding: 2px 12px;
+    border: ${({ theme }) => `1px solid ${theme.color.white[100]}`};
+  }
+  > button p {
+    font-size: 14px;
+  }
+
+  > button svg {
+    :nth-of-type(1) {
+      margin-right: 8px;
+    }
+  }
+`
+
 const HR = styled.hr`
   border: 1px solid ${({ theme }) => theme.color.gray[600]};
-  margin-top: 16px;
+  margin-bottom: 12px;
 `
 
 export const Primary = Template.bind({})

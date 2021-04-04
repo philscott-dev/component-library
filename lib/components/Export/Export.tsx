@@ -3,7 +3,7 @@ import { FC, useRef, useState } from 'react'
 import { useOnClickOutside } from 'hooks'
 import { IconButton, Text } from 'components'
 import { download } from 'helpers'
-import { FiChevronDown } from 'react-icons/fi'
+import { FiChevronDown, FiDownload } from 'react-icons/fi'
 import { DropdownMenu, DropdownOption } from '../Dropdown'
 import { arrayToCsv } from 'utils/csv'
 
@@ -47,7 +47,8 @@ const Export: FC<ExportProps> = ({ className, data, paths }) => {
     <span className={className}>
       <div>
         <IconButton ref={buttonRef} onMouseDown={handleButtonClick}>
-          <Text>EXPORT</Text>
+          <FiDownload />
+          <Text variant="light">Export</Text>
           <FiChevronDown />
         </IconButton>
         <DropdownMenu ref={dropdownRef} isVisible={isDropdownVisible}>
@@ -80,7 +81,13 @@ export default styled(Export)`
       padding: 2px 12px;
       border: ${({ theme }) => `1px solid ${theme.color.white[100]}`};
       > p {
+        font-size: 14px;
         margin-right: 2px;
+      }
+      > svg {
+        :nth-of-type(1) {
+          margin-right: 8px;
+        }
       }
     }
   }
