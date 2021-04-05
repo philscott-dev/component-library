@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { ChangeEvent, useContext, useMemo, useState } from 'react'
+import { ChangeEvent, useContext, useState } from 'react'
 import { Story, Meta } from '@storybook/react'
 import { tableDropdownConfig } from './config/tableDropdownConfig'
 import { TableDataProvider, Theme } from './decorators'
@@ -24,8 +24,6 @@ import {
   useSearch,
 } from 'lib/components/Table/hooks'
 import { FiSettings } from 'react-icons/fi'
-import { flattenData, getMetadata } from 'utils/pathMap'
-import { getPathsFromTemplates } from 'lib/utils/pathMap/getPathsFromTemplates'
 
 export default {
   title: 'Table',
@@ -40,32 +38,27 @@ const Template: Story<TableProps> = ({
   headingDropdownConfig,
   cellDropdownConfig,
 }) => {
-  const { tableData, data } = useContext(TableContext)
-  const { pathMap, pathKeys, paths } = usePathMap(data)
+  const {
+    tableData,
+    userPaths,
+    pathMap,
+    originalPathMap,
+    setUserPaths,
+  } = useContext(TableContext)
   /**
    * State
    */
   const [search, setSearch] = useTableInput({ defaultValue: '', delay: 200 })
   const [limit, setLimit] = useTableInput({ defaultValue: 10 })
   const [isModalVisible, setModalVisibility] = useState(false)
-  const [userPaths, setUserPaths] = useState<string[] | undefined>(paths)
 
   /**
    * Effects
    */
 
-  const flattenedData = useMemo(() => {
-    if (!userPaths || !pathMap) {
-      return tableData
-    }
-    const p = getPathsFromTemplates(userPaths, pathMap)
-    const metadata = getMetadata(tableData, p)
-    return flattenData(metadata)
-  }, [userPaths, tableData, pathMap])
-
   const searchResult = useSearch({
-    data: flattenedData, //TODO - pathKeys are from tableData, not flattenedData
-    pathKeys,
+    data: tableData,
+    pathMap,
     search: search.delayed,
   })
   const [
@@ -95,7 +88,9 @@ const Template: Story<TableProps> = ({
 
   const handleConfirmModal = (selectedPaths: string[]) => {
     setModalVisibility(false)
-    setUserPaths(selectedPaths)
+    if (setUserPaths) {
+      setUserPaths(selectedPaths)
+    }
   }
 
   return (
@@ -110,7 +105,7 @@ const Template: Story<TableProps> = ({
             <FiSettings />
             <Text variant="light">Configure</Text>
           </IconButton>
-          <Export data={data} paths={paths} />
+          <Export data={tableData} pathMap={pathMap} />
         </Toolbar>
       </TableHeader>
       <TableHeader>
@@ -144,8 +139,8 @@ const Template: Story<TableProps> = ({
       </TableFooter>
       <TablePathModal
         isVisible={isModalVisible}
-        pathMap={pathMap}
-        userPaths={[]}
+        pathMap={originalPathMap}
+        userPaths={userPaths}
         onClose={handleHideModal}
         onConfirm={handleConfirmModal}
       />

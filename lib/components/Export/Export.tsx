@@ -6,14 +6,15 @@ import { download } from 'helpers'
 import { FiChevronDown, FiDownload } from 'react-icons/fi'
 import { DropdownMenu, DropdownOption } from '../Dropdown'
 import { arrayToCsv } from 'utils/csv'
+import { PathMap } from 'utils/pathMap'
 
 export interface ExportProps {
   className?: string
-  data: any
-  paths?: string[]
+  data?: any[]
+  pathMap?: PathMap
 }
 
-const Export: FC<ExportProps> = ({ className, data, paths }) => {
+const Export: FC<ExportProps> = ({ className, data, pathMap }) => {
   const buttonRef = useRef<HTMLButtonElement>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const [isDropdownVisible, setDropdownVisible] = useState(false)
@@ -35,12 +36,17 @@ const Export: FC<ExportProps> = ({ className, data, paths }) => {
 
   const handleCSV = () => {
     setDropdownVisible(false)
-    if (paths) {
-      download(
-        arrayToCsv(data, ['*.firstName', '*.lastName']),
-        'file.csv',
-        'text',
-      )
+    if (pathMap && data) {
+      const paths = Object.keys(pathMap)
+        .map((path) => {
+          // remove first 2 characters *.
+          const string = path.substr(2)
+          return string.split('[*]').join('')
+        })
+        .filter((path) => {
+          return !path.endsWith('[*]')
+        })
+      download(arrayToCsv(data, paths), 'file.csv', 'text')
     }
   }
   return (
