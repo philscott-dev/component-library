@@ -89,7 +89,7 @@ const Flex = styled.div`
 
 const OptionButton = styled.button`
   flex: 1;
-  min-width: 400px;
+  min-width: 100%;
   display: flex;
   align-items: center;
   padding: 12px 16px;
