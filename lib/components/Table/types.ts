@@ -41,19 +41,19 @@ export type CellClickFunction = (
   isExpandable: CellType,
   rowIndex: number,
   expandIndex: number,
-  cellData: any,
-  rowData: Data,
-  tableData: Data[],
+  cellData?: any,
+  rowData?: Data,
+  tableData?: Data[],
 ) => void
 
-export interface CellDropdown {
+export interface TableDropdownConfig {
   shouldRender?: (cell: CellState) => boolean
   title: (cell: CellState) => string
-  options: (cell: CellState) => CellDropdownOption[] | undefined
+  options: (cell: CellState) => TableDropdownOption[] | undefined
   onClick: (e: MouseEvent<HTMLButtonElement>, cell: CellState) => void
 }
 
-export interface CellDropdownOption {
+export interface TableDropdownOption {
   title: string
   subtitle: string
   color: string

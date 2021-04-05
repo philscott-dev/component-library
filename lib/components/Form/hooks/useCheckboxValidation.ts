@@ -1,4 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react'
+import {
+  useState,
+  useContext,
+  useEffect,
+  ChangeEvent,
+  KeyboardEvent,
+} from 'react'
 import { LoadingStatus } from './useLoadingStatus'
 import { ValidationContext } from '../Form'
 
@@ -37,7 +43,7 @@ export function useCheckboxValidation(name: string, defaultValue: any) {
     }
   }, [error, loadingStatus])
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked)
     setValue(e.target.checked)
   }
@@ -48,7 +54,7 @@ export function useCheckboxValidation(name: string, defaultValue: any) {
     }
   }
 
-  const onKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.keyCode === 13) {
       e.currentTarget.blur()
     }

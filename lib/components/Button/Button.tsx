@@ -1,4 +1,4 @@
-import React from 'react'
+import type { MouseEvent, TouchEvent } from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 import type { Theme } from '@emotion/react'
@@ -8,9 +8,9 @@ export interface ButtonProps {
   type?: 'button' | 'submit' | 'reset'
   variant?: 'primary' | 'secondary' | 'tertiary' | 'alt' | 'danger'
   isActive?: boolean
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
-  onMouseDown?: (e: React.MouseEvent<HTMLButtonElement>) => void
-  onTouchStart?: (e: React.TouchEvent<HTMLButtonElement>) => void
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void
+  onMouseDown?: (e: MouseEvent<HTMLButtonElement>) => void
+  onTouchStart?: (e: TouchEvent<HTMLButtonElement>) => void
 }
 
 const Button = styled.button<ButtonProps>`

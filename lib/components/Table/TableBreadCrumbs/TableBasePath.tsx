@@ -1,4 +1,3 @@
-import React from 'react'
 import { FC } from 'react'
 import styled from '@emotion/styled'
 import { FiHome } from 'react-icons/fi'
@@ -6,7 +5,7 @@ import { Anchor } from 'components'
 
 interface TableBasePathProps {
   className?: string
-  label: string
+  label?: string
   href?: string
   onClick: () => void
 }

@@ -1,4 +1,3 @@
-import React from 'react'
 import { FC, MouseEvent } from 'react'
 import styled from '@emotion/styled'
 import { subMonths, addMonths, subYears, addYears, format } from 'date-fns'

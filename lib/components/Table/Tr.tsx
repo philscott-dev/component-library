@@ -1,9 +1,14 @@
-import React, { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import styled from '@emotion/styled'
-import { Data, ExtraTableData, CellDropdown, CellClickFunction } from './types'
 import Td from './Td'
 import { RowExpandSection } from './RowExpandSection'
 import { get } from 'helpers'
+import {
+  Data,
+  ExtraTableData,
+  TableDropdownConfig,
+  CellClickFunction,
+} from './types'
 
 interface TrProps {
   className?: string
@@ -11,8 +16,8 @@ interface TrProps {
   rowIndex: number
   originalRow: Data
   extraData?: ExtraTableData
-  data: Data[]
-  cellDropdown?: CellDropdown
+  data?: Data[]
+  dropdownConfig?: TableDropdownConfig
   onLoadTable: (r: number, keys: string[], key: string) => void
   onCellClick?: CellClickFunction
 }
@@ -23,12 +28,17 @@ const Tr: FC<TrProps> = ({
   originalRow,
   extraData,
   data,
-  cellDropdown,
+  dropdownConfig,
   onLoadTable,
   onCellClick,
 }) => {
   const [activeKey, setActiveKey] = useState<string>() // any clicked key cells key
   const [expandKeys, setExpandKeys] = useState<string[]>([]) // array of expanded keys
+
+  // should hopefully reset expand keys if data changes
+  useEffect(() => {
+    setExpandKeys([])
+  }, [keys])
 
   const handleCellClick: CellClickFunction = (
     e,
@@ -107,7 +117,7 @@ const Tr: FC<TrProps> = ({
             row={originalRow}
             extraData={extraData}
             data={data}
-            cellDropdown={cellDropdown}
+            dropdownConfig={dropdownConfig}
             onCellClick={handleCellClick}
           />
         ))}
@@ -124,7 +134,7 @@ const Tr: FC<TrProps> = ({
               data={data}
               expandKey={expandKeys[index + 1]}
               row={get(originalRow, expandKeys.slice(0, index + 1))}
-              cellDropdown={cellDropdown}
+              dropdownConfig={dropdownConfig}
               onCellClick={handleCellClick}
             />
           ))}

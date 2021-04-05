@@ -8,7 +8,7 @@ import {
   CellType,
   ExtraTableData,
   CellClickFunction,
-  CellDropdown,
+  TableDropdownConfig,
 } from './types'
 import Dropdown from './Dropdown'
 
@@ -16,12 +16,12 @@ export interface TableHeadingProps {
   className?: string
   row: Data
   extraData?: ExtraTableData
-  data: Data[]
+  data?: Data[]
   rowIndex: number
   cellKey: string
   activeKey?: string
   expandKey?: string
-  cellDropdown?: CellDropdown
+  dropdownConfig?: TableDropdownConfig
   onCellClick?: CellClickFunction
 }
 
@@ -33,7 +33,7 @@ const Td: FC<TableHeadingProps> = ({
   className,
   cellKey,
   expandKey,
-  cellDropdown,
+  dropdownConfig,
   onCellClick,
 }) => {
   const wrapperRef = useRef<HTMLTableCellElement>(null)
@@ -75,7 +75,9 @@ const Td: FC<TableHeadingProps> = ({
           </>
         )}
       </Cell>
-      <Dropdown ref={wrapperRef} cell={cell} cellDropdown={cellDropdown} />
+      {dropdownConfig ? (
+        <Dropdown ref={wrapperRef} cell={cell} config={dropdownConfig} />
+      ) : null}
     </TdWrapper>
   )
 }
@@ -114,6 +116,7 @@ const Cell = styled.button<{ cell: CellType; isExpanded: boolean }>`
   min-height: 40px;
   width: 100%;
   cursor: pointer;
+  user-select: text;
   border: 2px solid transparent;
   background: ${({ theme, isExpanded }) =>
     isExpanded ? theme.color.indigo[300] : theme.color.indigo[400]};

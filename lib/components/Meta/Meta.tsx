@@ -1,5 +1,3 @@
-import React from 'react'
-
 export interface MetaProps {
   title: string
   ogTitle: string

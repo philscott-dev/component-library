@@ -1,7 +1,5 @@
-import React from 'react'
 import styled from '@emotion/styled'
-import { FC, useState, useEffect, ChangeEvent } from 'react'
-
+import { FC, useState, useEffect, ChangeEvent, ReactNode } from 'react'
 import { useInputValidation } from './hooks/useInputValidation'
 import { Size } from './types'
 import { INPUT_LARGE, INPUT_SMALL } from './constants'
@@ -24,7 +22,7 @@ export interface FormSelectProps {
   defaultValue?: any
   inputSize?: Size
   tabIndex?: number
-  children: React.ReactNode
+  children: ReactNode
   onChange?: (e: ChangeEvent<HTMLSelectElement>) => void
 }
 

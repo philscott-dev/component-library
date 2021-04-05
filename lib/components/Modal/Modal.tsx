@@ -1,22 +1,27 @@
-import React from 'react'
 import styled from '@emotion/styled'
-
 import { FC } from 'react'
 import { IconButton, H4, Overlay } from 'components'
 import { FiX } from 'react-icons/fi'
 
 export interface ModalProps {
+  className?: string
   title: string
   children: any
   isVisible: boolean
   onClose?: () => void
 }
 
-const Modal: FC<ModalProps> = ({ title, children, isVisible, onClose }) => {
+const Modal: FC<ModalProps> = ({
+  className,
+  title,
+  children,
+  isVisible,
+  onClose,
+}) => {
   return (
     <>
       <Overlay isVisible={isVisible} />
-      <Wrapper isVisible={isVisible}>
+      <Wrapper className={className} isVisible={isVisible}>
         <TitleBar>
           <Title>{title}</Title>
           {onClose ? (
@@ -36,9 +41,9 @@ const Wrapper = styled.div<{ isVisible: boolean }>`
   padding: 0 40px 32px 40px;
   position: fixed;
   left: 50%;
-  top: 35%;
+  top: 50%;
   transform: translate(-50%, -50%);
-  margin: 0 auto;
+  margin: auto auto;
   background: ${({ theme }) => theme.color.indigo[600]};
   opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};

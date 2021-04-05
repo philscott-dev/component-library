@@ -1,20 +1,28 @@
-import React from 'react'
 import styled from '@emotion/styled'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState, useRef } from 'react'
 import { css } from '@emotion/react'
 import { splitCamalized } from 'helpers'
 import { IconButton } from 'components'
 import { FiMoreVertical } from 'react-icons/fi'
-import { ExtraTableData } from './types'
+import { TableDropdownConfig, ExtraTableData } from './types'
+import Dropdown from './Dropdown'
 
 export interface ThProps {
   onClick?: (key: string) => void
   heading: string
   extraData?: ExtraTableData
   className?: string
+  dropdownConfig?: TableDropdownConfig
 }
 
-const Th: FC<ThProps> = ({ heading, extraData, onClick, className }) => {
+const Th: FC<ThProps> = ({
+  className,
+  heading,
+  extraData,
+  dropdownConfig,
+  onClick,
+}) => {
+  const ref = useRef<HTMLButtonElement>(null)
   const [elem, setElem] = useState<string | JSX.Element>()
   useEffect(() => {
     if (extraData && extraData[heading] && extraData[heading].heading) {
@@ -31,22 +39,28 @@ const Th: FC<ThProps> = ({ heading, extraData, onClick, className }) => {
   return (
     <th className={className} onClick={handleClick}>
       <Wrapper>
-        <IconButton>
-          <FiMoreVertical
-            css={css`
-              margin-left: -3px;
-              margin-right: 2px;
-            `}
-          />
+        <IconButton ref={ref}>
+          <FiMoreVertical />
         </IconButton>
         {elem}
       </Wrapper>
+      {dropdownConfig ? (
+        <Dropdown
+          ref={ref}
+          cell={{ type: 'text' }}
+          config={dropdownConfig}
+          css={css`
+            top: 50px;
+            left: 0;
+          `}
+        />
+      ) : null}
     </th>
   )
 }
 
 export default styled(Th)`
-  padding: 12px;
+  padding: 12px 0;
   padding-bottom: 16px;
   font-weight: 500;
   font-size: 12px;

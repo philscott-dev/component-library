@@ -1,4 +1,3 @@
-import React from 'react'
 import { useContext, FC } from 'react'
 import { css, Theme } from '@emotion/react'
 import { ValidationContext } from './Form'
@@ -13,14 +12,19 @@ const Error: FC<ErrorProps> = ({ name }) => {
   const error = errors[name]
   if (!error)
     return (
-      <Text.Light className="errormessage" size="small" css={errorCss}>
+      <Text
+        variant="light"
+        className="errormessage"
+        size="small"
+        css={errorCss}
+      >
         &nbsp;
-      </Text.Light>
+      </Text>
     )
   return (
-    <Text.Light className="errormessage" size="small" css={errorCss}>
+    <Text variant="light" className="errormessage" size="small" css={errorCss}>
       {error}
-    </Text.Light>
+    </Text>
   )
 }
 

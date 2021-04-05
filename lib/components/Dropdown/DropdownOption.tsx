@@ -10,7 +10,7 @@ export default styled.button<{ isDelete?: boolean; disabled?: boolean }>`
   line-height: 1;
   border-style: solid;
   cursor: pointer;
-  width: 100%;
+  width: inherit;
   outline: none;
   border: none;
   margin: 0;
@@ -24,6 +24,10 @@ export default styled.button<{ isDelete?: boolean; disabled?: boolean }>`
   &:hover {
     color: ${({ theme, isDelete }) =>
       isDelete ? theme.color.red[200] : theme.color.blue[300]};
+    > p {
+      color: ${({ theme, isDelete }) =>
+        isDelete ? theme.color.red[200] : theme.color.blue[300]};
+    }
   }
   &:disabled {
     opacity: 0.5;

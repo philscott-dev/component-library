@@ -9,5 +9,3 @@ export function download(
   a.download = fileName
   a.click()
 }
-
-export function upload() {}

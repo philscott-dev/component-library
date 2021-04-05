@@ -1,10 +1,9 @@
-import React from 'react'
 import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 import { FC, useEffect, useState, MouseEvent, useRef } from 'react'
 import { FiDatabase } from 'react-icons/fi'
 import { splitAndUpperCase } from 'helpers'
-import { Data, CellClickFunction, CellDropdown } from '../types'
+import { Data, CellClickFunction, TableDropdownConfig } from '../types'
 import { useValueType } from '../hooks/useValueType'
 import RowExpandArrow from './RowExpandArrow'
 import RowExpandValueHeading from './RowExpandValueHeading'
@@ -18,8 +17,8 @@ interface RowExpandValueProps {
   expandIndex: number
   rowIndex: number
   row: Data
-  data: Data[]
-  cellDropdown?: CellDropdown
+  data?: Data[]
+  dropdownConfig?: TableDropdownConfig
   onCellClick?: CellClickFunction
 }
 const RowExpandValue: FC<RowExpandValueProps> = ({
@@ -30,13 +29,13 @@ const RowExpandValue: FC<RowExpandValueProps> = ({
   rowIndex,
   row,
   data,
-  cellDropdown,
+  dropdownConfig,
   onCellClick,
 }) => {
   const ref = useRef<HTMLDivElement>(null)
-
   const cell = useValueType(rowIndex, cellKey, row)
   const [title, setTitle] = useState('')
+
   useEffect(() => {
     setTitle(splitAndUpperCase(cellKey || ''))
   }, [cellKey])
@@ -75,15 +74,17 @@ const RowExpandValue: FC<RowExpandValueProps> = ({
           ) : null}
         </Flex>
       </ValueButton>
-      <Dropdown
-        ref={ref}
-        cell={cell}
-        cellDropdown={cellDropdown}
-        css={css`
-          top: 50px;
-          left: 0;
-        `}
-      />
+      {dropdownConfig ? (
+        <Dropdown
+          ref={ref}
+          cell={cell}
+          config={dropdownConfig}
+          css={css`
+            top: 50px;
+            left: 0;
+          `}
+        />
+      ) : null}
     </Wrapper>
   )
 }
@@ -91,7 +92,7 @@ const RowExpandValue: FC<RowExpandValueProps> = ({
 export default RowExpandValue
 
 const Wrapper = styled.div`
-  display: inline;
+  display: inline-block;
   position: relative;
   box-sizing: border-box;
 `
@@ -107,6 +108,7 @@ const ValueButton = styled.button<{ isActive: boolean }>`
   border-radius: 2px;
   cursor: pointer;
   background: transparent;
+  user-select: text;
   border: 2px solid
     ${({ theme, isActive }) =>
       isActive ? theme.color.blue[300] : 'transparent'};

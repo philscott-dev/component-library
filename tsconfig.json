@@ -15,7 +15,9 @@
       "components": ["lib/components"],
       "hooks": ["lib/hooks"],
       "theme": ["lib/theme"],
-      "helpers": ["lib/helpers"]
+      "helpers": ["lib/helpers"],
+      "utils/pathMap": ["lib/utils/pathMap"],
+      "utils/csv": ["lib/utils/csv"]
     }
   },
   "include": ["stories", "lib"]

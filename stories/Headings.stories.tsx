@@ -1,7 +1,7 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import { H1, H1Props, H2, H2Props, H3, H4, H5, H6 } from 'components'
-import { Theme } from './Decorators'
+import { Theme } from './decorators'
 
 export default {
   title: 'Headings',
