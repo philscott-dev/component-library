@@ -5,7 +5,7 @@ import type { Metadata } from './types'
  * Get the data and position information of keys at selected paths
  */
 
-export function getMetadata(response: any, paths: string[]): Metadata[] {
+export function getMetadata<T>(data: T, paths: string[]): Metadata<T>[] {
   return paths.map((path) => {
     // split the path
     const keys = path.split('.')
@@ -17,9 +17,9 @@ export function getMetadata(response: any, paths: string[]): Metadata[] {
     const prop = keys[keys.length - 1]
 
     // get data for path
-    const data = get(response, path)
+    const result = get(data, path)
 
     // return the gathered info to work with
-    return { index, prop, data, path }
+    return { index, prop, path, data: result }
   })
 }

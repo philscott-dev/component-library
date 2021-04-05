@@ -49,22 +49,22 @@ const Template: Story<TableProps> = ({
   const [limit, setLimit] = useTableInput({ defaultValue: 10 })
   const [isModalVisible, setModalVisibility] = useState(false)
   const [userPaths, setUserPaths] = useState<string[] | undefined>(paths)
+
+  /**
+   * Effects
+   */
+
   const flattenedData = useMemo(() => {
     if (!userPaths || !pathMap) {
       return tableData
     }
     const p = getPathsFromTemplates(userPaths, pathMap)
     const metadata = getMetadata(tableData, p)
-    const flat = flattenData(tableData, metadata)
-    return flat
+    return flattenData(metadata)
   }, [userPaths, tableData, pathMap])
 
-  /**
-   * Effects
-   */
-
   const searchResult = useSearch({
-    data: flattenedData,
+    data: flattenedData, //TODO - pathKeys are from tableData, not flattenedData
     pathKeys,
     search: search.delayed,
   })

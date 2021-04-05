@@ -21,6 +21,7 @@ export const TableDataProvider = (Story: () => StoryFnReactReturnType) => {
         count: Math.round(Math.random() * 100),
         month: faker.date.month(),
         year: faker.music.genre(),
+        nested: Array.from({ length: 5 }, () => ({ event: Math.random() })),
       })),
     }))
     setTableData(data)

@@ -1,5 +1,5 @@
 import { isObject } from 'helpers'
-import { parseKey } from '.'
+import { parseKey } from './parseKey'
 import { Metadata } from './types'
 
 /**
@@ -9,7 +9,7 @@ import { Metadata } from './types'
  * = NOT USING IN DEMO index.ts =
  */
 
-export function flattenNestedProp(response: any, metadata: Metadata[]) {
+export function flattenNestedProp<T>(response: any, metadata: Metadata<T>[]) {
   for (const { index, prop, data, path } of metadata) {
     // spread the original data and add the flattened data to the top level
     if (response[index][prop]) {

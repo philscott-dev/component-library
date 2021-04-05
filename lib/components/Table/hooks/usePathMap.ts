@@ -19,8 +19,6 @@ export function usePathMap<T>(data?: T[]) {
     const paths = keys.filter((path) => {
       return !path.endsWith('[*]')
     })
-    console.log(paths)
-    console.log(pathMap)
     setPathMap(pathMap)
     setPathKeys(mappedKeys)
     setPaths(paths)

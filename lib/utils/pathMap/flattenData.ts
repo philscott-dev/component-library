@@ -4,8 +4,8 @@ import type { Metadata } from './types'
  * Generate new copy of tableData array, with ONLY flattened properties
  */
 
-export function flattenData(response: any, metadata: Metadata[]) {
-  const temp: any = []
+export function flattenData<T>(metadata: Metadata<T>[]) {
+  const temp: any[] = []
   // flatten the table by selected path
   for (const { index, data, prop: p } of metadata) {
     //get the prop name without the [*] index

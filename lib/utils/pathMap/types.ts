@@ -1,12 +1,12 @@
-export interface Metadata {
+export interface Metadata<T> {
   index: number
   prop: string
-  data: any
+  data: T
   path: string
 }
 
-export interface ObjPaths {
-  data: any
+export interface ObjPaths<T> {
+  data: T
   path: (string | number)[]
 }
 
