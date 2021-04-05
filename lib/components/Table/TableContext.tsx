@@ -43,7 +43,9 @@ export const TableContextProvider: FC<TableContextProviderProps> = ({
 }) => {
   const originalPathMap = useMemo(() => {
     const initialMap = getPaths(data)
-    return excludePathMaps(initialMap)
+    const pathMap = excludePathMaps(initialMap)
+
+    return pathMap
   }, [data])
 
   const [tableData, setTableData] = useState<Data[] | undefined>(data)
@@ -53,29 +55,26 @@ export const TableContextProvider: FC<TableContextProviderProps> = ({
   const [pathMap, setPathMap] = useState<PathMap>()
 
   useEffect(() => {
-    const d = get(data, tablePath?.join() ?? '', data)
-    const initialMap = getPaths(d)
-    const pathMap = excludePathMaps(initialMap)
     if (userPaths && userPaths.length) {
-      const paths = getPathsFromTemplates(userPaths, pathMap)
-      const metadata = getMetadata(d, paths)
+      const paths = getPathsFromTemplates(userPaths, originalPathMap)
+      const metadata = getMetadata(data, paths)
 
       // get flat data and map
       const flat = flattenData(metadata)
       const initialFlatMap = getPaths(flat)
       const flatMap = excludePathMaps(initialFlatMap)
-      setTableData(flat)
+      const flatData = get(flat, tablePath?.join() ?? '', flat)
+
+      setTableData(flatData)
       setPathMap(flatMap)
     } else {
+      const d = get(data, tablePath?.join() ?? '', data)
+      const initialMap = getPaths(d)
+      const pathMap = excludePathMaps(initialMap)
       setTableData(d)
       setPathMap(pathMap)
     }
-  }, [userPaths, tablePath, data])
-
-  useEffect(() => {
-    setTablePath([])
-    setBreadCrumbs([])
-  }, [userPaths])
+  }, [userPaths, tablePath, data, originalPathMap])
 
   return (
     <TableContext.Provider

@@ -44,6 +44,8 @@ const Template: Story<TableProps> = ({
     pathMap,
     originalPathMap,
     setUserPaths,
+    setBreadCrumbs,
+    setTablePath,
   } = useContext(TableContext)
   /**
    * State
@@ -88,8 +90,10 @@ const Template: Story<TableProps> = ({
 
   const handleConfirmModal = (selectedPaths: string[]) => {
     setModalVisibility(false)
-    if (setUserPaths) {
+    if (setUserPaths && setTablePath && setBreadCrumbs) {
       setUserPaths(selectedPaths)
+      setTablePath([])
+      setBreadCrumbs([])
     }
   }
 
