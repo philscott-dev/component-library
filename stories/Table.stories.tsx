@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { ChangeEvent, useContext, useState } from 'react'
 import { Story, Meta } from '@storybook/react'
+import { FiSettings } from 'react-icons/fi'
 import { tableDropdownConfig } from './config/tableDropdownConfig'
 import { TableDataProvider, Theme } from './decorators'
 import {
@@ -19,11 +20,9 @@ import {
 } from 'components'
 import {
   useTableInput,
-  usePathMap,
   usePagination,
   useSearch,
 } from 'lib/components/Table/hooks'
-import { FiSettings } from 'react-icons/fi'
 
 export default {
   title: 'Table',
