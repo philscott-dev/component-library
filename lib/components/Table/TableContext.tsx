@@ -72,6 +72,11 @@ export const TableContextProvider: FC<TableContextProviderProps> = ({
     }
   }, [userPaths, tablePath, data])
 
+  useEffect(() => {
+    setTablePath([])
+    setBreadCrumbs([])
+  }, [userPaths])
+
   return (
     <TableContext.Provider
       value={{
