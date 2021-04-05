@@ -97,7 +97,7 @@ const Template: Story<TableProps> = ({
   }
 
   return (
-    <>
+    <Container>
       <TableHeader>
         <div>
           <H2>Users</H2>
@@ -116,11 +116,13 @@ const Template: Story<TableProps> = ({
         <Limit value={limit.input} onChange={handleLimit} />
       </TableHeader>
       <HR />
-      <Table
-        tableData={pageData}
-        headingDropdownConfig={headingDropdownConfig}
-        cellDropdownConfig={cellDropdownConfig}
-      />
+      <TableWrapper>
+        <Table
+          tableData={pageData}
+          headingDropdownConfig={headingDropdownConfig}
+          cellDropdownConfig={cellDropdownConfig}
+        />
+      </TableWrapper>
 
       <TableFooter>
         <TextCountWrapper>
@@ -147,7 +149,7 @@ const Template: Story<TableProps> = ({
         onClose={handleHideModal}
         onConfirm={handleConfirmModal}
       />
-    </>
+    </Container>
   )
 }
 
@@ -202,9 +204,20 @@ const Toolbar = styled.span`
   }
 `
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 40px);
+`
+
+const TableWrapper = styled.div`
+  overflow: auto;
+`
+
 const HR = styled.hr`
-  border: 1px solid ${({ theme }) => theme.color.gray[600]};
+  border: 1px solid ${({ theme }) => theme.color.gray[300]};
   margin-bottom: 12px;
+  width: 100%;
 `
 
 export const Primary = Template.bind({})
