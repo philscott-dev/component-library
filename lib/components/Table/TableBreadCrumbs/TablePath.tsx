@@ -43,6 +43,7 @@ export default styled(TablePath)`
   display: flex;
   > a {
     font-weight: 500;
+    text-transform: uppercase;
     color: ${({ theme }) => theme.color.gray[300]};
   }
 `

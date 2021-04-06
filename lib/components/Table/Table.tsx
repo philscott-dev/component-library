@@ -52,7 +52,7 @@ const Table: FC<TableProps> = ({
     const label = splitCamalized(key).join(' ')
     if (tablePath && breadCrumbs && setBreadCrumbs && setTablePath) {
       setTablePath([...tablePath, [row, ...keys, key]])
-      setBreadCrumbs([...breadCrumbs, { label: `[${r}] ${label}` }])
+      setBreadCrumbs([...breadCrumbs, { label: `${label}` }])
     }
   }
 
