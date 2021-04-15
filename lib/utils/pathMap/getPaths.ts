@@ -2,9 +2,12 @@ import { handleIndexOrStringPaths } from './handleIndexOrString'
 import { createTemplateString } from './createTemplateString'
 import type { PathMap, ObjPaths } from './types'
 
-export const getPaths = (data: any) => {
+export function getPaths<T>(data?: T[]) {
+  if (!data) {
+    return {}
+  }
   const pathMap: PathMap = {}
-  let nodes: ObjPaths[] = [
+  let nodes: ObjPaths<T>[] = [
     {
       data,
       path: [],
@@ -19,7 +22,7 @@ export const getPaths = (data: any) => {
     // remove that index from the array
     nodes = nodes.slice(0, lastIndex)
 
-    // generate indicies or keys
+    // generate indicies or keys or empty array
     const keys = Array.isArray(node.data)
       ? Array.from({ length: node.data.length }, (_, i) => i)
       : Object.keys(node.data)
@@ -28,7 +31,7 @@ export const getPaths = (data: any) => {
     let objKeys: (string | number)[] = []
 
     for (const key of keys) {
-      if (typeof node.data[key] === 'object') {
+      if (typeof key === 'number' && typeof node.data[key] === 'object') {
         // handle nested objects and arrays
         const path = handleIndexOrStringPaths(node.path, key)
         const template = createTemplateString(path)
@@ -36,7 +39,7 @@ export const getPaths = (data: any) => {
         pathMap[template] = [...(pathMap?.[template] ?? []), pathString]
         nodes = [
           {
-            data: node.data[key],
+            data: node.data[key] as any,
             path,
           },
           ...nodes,

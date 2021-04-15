@@ -6,7 +6,7 @@ export interface Metadata<T> {
 }
 
 export interface ObjPaths<T> {
-  data: T
+  data: T[]
   path: (string | number)[]
 }
 
