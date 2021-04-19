@@ -36,7 +36,7 @@ export const getPaths = (data: any) => {
         const pathString = path.join('.')
         pathMap[template] = [...(pathMap?.[template] ?? []), pathString]
 
-        // BUGFIX!!!!!! existance check!!!!!
+        // if no data at key, stop recursive behavior
         if (node.data[key]) {
           nodes = [
             {

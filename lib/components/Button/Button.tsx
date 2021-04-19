@@ -5,7 +5,6 @@ import type { Theme } from '@emotion/react'
 
 export interface ButtonProps {
   size?: 'small' | 'normal' | 'large'
-  type?: 'button' | 'submit' | 'reset'
   variant?: 'primary' | 'secondary' | 'tertiary' | 'alt' | 'danger'
   isActive?: boolean
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void
