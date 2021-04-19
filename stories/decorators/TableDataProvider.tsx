@@ -27,8 +27,39 @@ export const TableDataProvider = (Story: () => StoryFnReactReturnType) => {
     setTableData(data)
   }, [])
 
+  const test = undefined
+  const couldBeNull = [
+    {
+      limit: 1000,
+      date: '2020',
+      total: '16',
+      alerts: [
+        {
+          previous_ip_address: '140.238.27.38',
+          new_ip_address: '1.1.1.1',
+          action: 'transfer in',
+          domain: '2080.xyz',
+        },
+        {
+          previous_ip_address: '140.238.27.38',
+          new_ip_address: '1.1.1.1',
+          action: 'transfer in',
+          domain: '2080.xyz',
+        },
+        {
+          previous_ip_address: null,
+          new_ip_address: '1.1.1.1',
+          action: 'transfer in',
+          domain: '2080.xyz',
+        },
+      ],
+    },
+  ]
+
+  console.log(Object.keys({ x: 1, y: null }))
+
   return (
-    <TableContextProvider data={tableData}>
+    <TableContextProvider data={couldBeNull}>
       <Story />
     </TableContextProvider>
   )

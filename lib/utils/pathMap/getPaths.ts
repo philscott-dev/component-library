@@ -2,12 +2,9 @@ import { handleIndexOrStringPaths } from './handleIndexOrString'
 import { createTemplateString } from './createTemplateString'
 import type { PathMap, ObjPaths } from './types'
 
-export function getPaths<T>(data?: T[]) {
-  if (!data) {
-    return {}
-  }
+export const getPaths = (data: any) => {
   const pathMap: PathMap = {}
-  let nodes: ObjPaths<T>[] = [
+  let nodes: ObjPaths[] = [
     {
       data,
       path: [],
@@ -22,7 +19,8 @@ export function getPaths<T>(data?: T[]) {
     // remove that index from the array
     nodes = nodes.slice(0, lastIndex)
 
-    // generate indicies or keys or empty array
+    console.log(node.data)
+    // generate indicies or keys
     const keys = Array.isArray(node.data)
       ? Array.from({ length: node.data.length }, (_, i) => i)
       : Object.keys(node.data)
@@ -31,19 +29,23 @@ export function getPaths<T>(data?: T[]) {
     let objKeys: (string | number)[] = []
 
     for (const key of keys) {
-      if (typeof key === 'number' && typeof node.data[key] === 'object') {
+      if (typeof node.data[key] === 'object') {
         // handle nested objects and arrays
         const path = handleIndexOrStringPaths(node.path, key)
         const template = createTemplateString(path)
         const pathString = path.join('.')
         pathMap[template] = [...(pathMap?.[template] ?? []), pathString]
-        nodes = [
-          {
-            data: node.data[key] as any,
-            path,
-          },
-          ...nodes,
-        ]
+
+        // BUGFIX!!!!!! existance check!!!!!
+        if (node.data[key]) {
+          nodes = [
+            {
+              data: node.data[key],
+              path,
+            },
+            ...nodes,
+          ]
+        }
       } else {
         // collect the keys that are on top level objects
         objKeys = [...objKeys, key]
